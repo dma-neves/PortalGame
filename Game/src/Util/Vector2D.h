@@ -29,7 +29,7 @@ public:
     bool operator==(Vector2D vec) { return (x == vec.x && y == vec.y); }
     bool operator!=(Vector2D vec) { return (x != vec.x && y != vec.y); }
 
-    void setMagnitude(float mag);
+    Vector2D& setMagnitude(float mag);
     float magnitude();
     bool null();
     float angle(Vector2D vec);

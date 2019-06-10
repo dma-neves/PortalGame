@@ -87,13 +87,15 @@ void Vector2D::operator=(float num)
     }
 }
 
-void Vector2D::setMagnitude(float mag)
+Vector2D& Vector2D::setMagnitude(float mag)
 {
     float v_x = x * (mag / magnitude());
     float v_y = y * (mag / magnitude());
 
     x = v_x;
     y = v_y;
+
+    return *this;
 }
 
 float Vector2D::magnitude()

@@ -21,34 +21,38 @@ void EntityManager::update(float dt)
 	eraseDeadEntities();
 }
 
-void EntityManager::addPlayer(Player* player)
+Player& EntityManager::addPlayer(Player* player)
 {
 	this->player.reset(player);
 
 	entity.push_back(player);
 	colEntity.push_back(player);
+	return *player;
 }
 
-void EntityManager::addPortal(Portal* portal)
+Portal& EntityManager::addPortal(Portal* portal)
 {
 	this->portal[portal->getType()].reset(portal);
 	this->entity.push_back(portal);
+	return *portal;
 }
 
-void EntityManager::addStaticBlock(Entity* staticBlock)
+Entity& EntityManager::addStaticBlock(Entity* staticBlock)
 {
 	std::unique_ptr<Entity> uptr(staticBlock);
 	this->staticBlock.push_back(std::move(uptr));
 
 	this->entity.push_back(staticBlock);
 	this->colEntity.push_back(staticBlock);
+	return *staticBlock;
 }
 
-void EntityManager::addPortalProjectile(PortalProjectile* portalProjectile)
+PortalProjectile& EntityManager::addPortalProjectile(PortalProjectile* portalProjectile)
 {
 	this->portalProj[portalProjectile->getType()].reset(portalProjectile);
 	this->entity.push_back(portalProjectile);
 	this->colEntity.push_back(portalProjectile);
+	return *portalProjectile;
 }
 
 void EntityManager::handleUpdate(Entity* entity)

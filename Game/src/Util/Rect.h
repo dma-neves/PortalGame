@@ -13,6 +13,8 @@ public:
     bool pointOnRect(Vector2D point);
     bool intersects(Rect rect);
 
+    float diagonalLength() { return sqrt( pow(size.x, 2) + pow(size.y, 2) ); }
+
     Vector2D pos;
     Vector2D size;
 };

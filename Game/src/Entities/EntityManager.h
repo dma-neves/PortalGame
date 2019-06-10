@@ -19,10 +19,10 @@ public:
 	void handleUpdate(Entity* entity);
 	void eraseDeadEntities();
 
-	void addPlayer(Player* player);
-	void addPortal(Portal* portal);
-	void addStaticBlock(Entity* staticBlock);
-	void addPortalProjectile(PortalProjectile* portalProjectile);
+	Player& addPlayer(Player* player);
+	Portal& addPortal(Portal* portal);
+	Entity& addStaticBlock(Entity* staticBlock);
+	PortalProjectile& addPortalProjectile(PortalProjectile* portalProjectile);
 
 	Player& getPlayer() { return *player.get(); }
 	std::vector<Entity*>& getEntities() { return entity; }

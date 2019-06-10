@@ -8,7 +8,7 @@ OBJECT_FILES=obj/main.o obj/Game.o obj/Vector2D.o obj/Rect.o obj/Entity.o obj/Te
 OBJECT_FILES+=obj/Player.o obj/LevelLoader.o obj/DynamicEntity.o obj/EntityManager.o obj/Portal.o obj/PortalProjectile.o
 
 PortalGame: $(OBJECT_FILES)
-	$(CPPC) $(OBJECT_FILES) -o bin/PortalGame.out -L $(LIB_DIRECTORY) $(LIBS)
+	$(CPPC) $(OBJECT_FILES) -o bin/PortalGame -L $(LIB_DIRECTORY) $(LIBS)
 
 obj/main.o: main.cpp
 	$(CPPC) -c main.cpp -I $(INC_DIRECOTRY) -o obj/main.o

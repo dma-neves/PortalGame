@@ -9,6 +9,14 @@ PortalProjectile::PortalProjectile(Rect rect, std::vector<Entity*>* colEntity) :
 {
 }
 
+void PortalProjectile::update(float dt)
+{
+    timer += dt;
+    if(timer >= LIFE_SPAN) kill();
+
+    else DynamicEntity::update(dt);
+}
+
 void PortalProjectile::shoot(Vector2D direction)
 {
     velocity = direction;

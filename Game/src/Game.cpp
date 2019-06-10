@@ -86,11 +86,25 @@ void Game::shootPortal(Vector2D mousePos, Portal::Type type)
 	{
 		Rect rect = entityMng.getPlayer().getRect();
 		Vector2D direction = entityRen.getWorldPosition(mousePos, window) - rect.pos;
-		direction.setMagnitude( sqrt( pow(rect.size.x, 2) + pow(rect.size.y, 2) ) );
+		direction.setMagnitude(rect.diagonalLength());
 		rect.size = Vector2D(1,1);
 		rect.pos += direction;
-		entityMng.addPortalProjectile( new PortalProjectile(rect, "", "", &entityMng.getColEntities(), type) );
-		entityMng.getPortalProjectile(type).shoot(direction);
-		entityRen.resizeCamera(Vector2D(), window.getSize(), true);
+
+		bool valid = true;
+		for(Entity* e : entityMng.getColEntities())
+		{
+			if(e->getRect().intersects(rect)) 
+			{
+				valid = false;
+				break;
+			}
+		}
+
+		if(valid)
+		{
+			PortalProjectile& portalProj = entityMng.addPortalProjectile( new PortalProjectile(rect, "", "", &entityMng.getColEntities(), type) );
+			portalProj.shoot(direction);
+			entityRen.resizeCamera(Vector2D(), window.getSize(), true);
+		}
 	}
 }
