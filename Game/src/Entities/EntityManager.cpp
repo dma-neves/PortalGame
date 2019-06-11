@@ -1,6 +1,6 @@
 #include "EntityManager.h"
 
-EntityManager::EntityManager()
+EntityManager::EntityManager(bool* resize) : resize(resize)
 {
 }
 
@@ -63,7 +63,25 @@ void EntityManager::handleUpdate(Entity* entity)
 	{
 		if(portalProj->collision != DynamicEntity::Collision::NON)
 		{
-			portal[portalProj->getType()]->getRect().pos = portalProj->getRect().pos;
+			Vector2D direction;
+			switch(portalProj->getCollisionDirection())
+			{
+				case DynamicEntity::UP: direction.y = 1; break;
+
+				case DynamicEntity::DOWN: direction.y = -1; break;
+
+				case DynamicEntity::LEFT: direction.x = 1; break;
+
+				case DynamicEntity::RIGHT: direction.x = -1; break;
+			}
+
+			portal[portalProj->getType()]->reposition( portalProj->getRect().pos, direction );
+
+			Rect& portalRect = portal[portalProj->getType()]->getRect();
+			float dim = std::min(portalRect.size.x, portalRect.size.y);
+			portalRect.size = portalProj->collision == DynamicEntity::Collision::HORIZONTAL ? Vector2D(dim, dim*2) : Vector2D(dim*2, dim);
+			*resize = true;
+
 			portalProj->kill();
 		}
 	}
@@ -84,7 +102,7 @@ void EntityManager::eraseDeadEntities()
 
 bool EntityManager::hasPortalProjectile(Portal::Type type)
 {
-	if(!portalProj[type]) { return false; std::cout << "EKE" << std::endl; }
+	if(!portalProj[type]) return false;
 
 	else return portalProj[type]->isAlive();
 }

@@ -1,8 +1,8 @@
 #include "Game.h"
 
 Game::Game(Vector2D wSize, std::string title) :
-window(sf::VideoMode(wSize.x, wSize.y), title),
-entityMng(),
+window(sf::VideoMode(wSize.x, wSize.y), title, sf::Style::Close),
+entityMng(&resize),
 entityRen(Rect(Vector2D(20,5), Vector2D(50, 50)), wSize, &entityMng.getEntities()),
 levelLoader(&entityMng)
 {
@@ -10,8 +10,6 @@ levelLoader(&entityMng)
 
 	entityMng.addPortal(new Portal(Rect(Vector2D(0,0), Vector2D(1, 1)), "bluePortal.png", levelLoader.getPack(), Portal::BLUE));
 	entityMng.addPortal(new Portal(Rect(Vector2D(20,0), Vector2D(1, 1)), "redPortal.png", levelLoader.getPack(), Portal::RED));
-
-	entityRen.resizeCamera(Vector2D(), wSize, true);
 }
 
 void Game::run()
@@ -77,6 +75,11 @@ void Game::update(float dt)
 
 void Game::render()
 {
+	if(resize) 
+	{
+		entityRen.resizeCamera(Vector2D(), window.getSize(), true);
+		resize = false;
+	}
 	entityRen.render(window);
 }
 
@@ -102,9 +105,10 @@ void Game::shootPortal(Vector2D mousePos, Portal::Type type)
 
 		if(valid)
 		{
-			PortalProjectile& portalProj = entityMng.addPortalProjectile( new PortalProjectile(rect, "", "", &entityMng.getColEntities(), type) );
+			std::string textureFile = type == Portal::Type::BLUE ? "bluePortal.png" : "redPortal.png";
+			PortalProjectile& portalProj = entityMng.addPortalProjectile( new PortalProjectile(rect, textureFile, levelLoader.getPack(), &entityMng.getColEntities(), type) );
 			portalProj.shoot(direction);
-			entityRen.resizeCamera(Vector2D(), window.getSize(), true);
+			resize = true;
 		}
 	}
 }

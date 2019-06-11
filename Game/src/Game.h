@@ -32,6 +32,8 @@ private:
 	sf::Clock clock;
 	bool lMouseRel = false;
 	bool rMouseRel = false;
+
+	bool resize = true;
 };
 
 #endif

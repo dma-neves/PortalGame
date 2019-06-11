@@ -23,7 +23,8 @@ void PortalProjectile::shoot(Vector2D direction)
     velocity.setMagnitude(SPEED);
 }
 
-void PortalProjectile::handleCollisionEffect(Collision colType)
+void PortalProjectile::handleCollisionEffect(Collision colType, Direction colDir)
 {
     collision = colType;
+    collisionDir = colDir;
 }

@@ -18,15 +18,18 @@ public:
 
     void shoot(Vector2D direction);
     Portal::Type getType() { return type; };
+
+    Direction getCollisionDirection() { return collisionDir; }
     
 private:
 
-    void handleCollisionEffect(Collision colType) override;
+    void handleCollisionEffect(Collision colType, Direction colDir) override;
 
 public:
 
     Portal::Type type;
     Collision collision = Collision::NON;
+    Direction collisionDir = Direction::UNDEFINED;
 
 private:
 

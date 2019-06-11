@@ -12,7 +12,7 @@
 class EntityManager
 {
 public:
-	EntityManager();
+	EntityManager(bool* resize);
 
 	void reset();
 	void update(float dt);
@@ -40,6 +40,8 @@ private:
 	std::unique_ptr<Player> player;
 	std::unique_ptr<Portal> portal[2];
 	std::unique_ptr<PortalProjectile> portalProj[2];
+
+	bool* resize;
 };
 
 #endif

@@ -2,6 +2,6 @@
 
 int main()
 {
-	Game game(Vector2D(500, 500), "Portal Game");
+	Game game(Vector2D(600, 600), "Portal Game");
 	game.run();
 }
