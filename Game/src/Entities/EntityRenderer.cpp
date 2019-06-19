@@ -1,7 +1,7 @@
 #include "EntityRenderer.h"
 
-EntityRenderer::EntityRenderer(Rect camera, Vector2D wSize, std::vector<Entity*>* entity) :
-camera(camera), entity(entity)
+EntityRenderer::EntityRenderer(Rect camera, Vector2D wSize, std::vector<Entity*>* entity, bool* resize) :
+camera(camera), entity(entity), resize(resize)
 {
 }
 
@@ -30,6 +30,12 @@ void EntityRenderer::updateViewableEntities()
 
 void EntityRenderer::render(sf::RenderWindow& window)
 {
+	if(resize)
+	{
+		resizeCamera(Vector2D(), window.getSize(), true);
+		*resize = false;
+	}
+
 	updateViewableEntities();
 
 	for(Entity* e : viewEntity)

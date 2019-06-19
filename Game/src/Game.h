@@ -1,6 +1,8 @@
 #ifndef GAME
 #define GAME
 
+#define DT_MULTIPLIER 3
+
 #include <SFML/Graphics.hpp>
 #include <vector>
 

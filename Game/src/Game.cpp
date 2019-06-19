@@ -3,7 +3,7 @@
 Game::Game(Vector2D wSize, std::string title) :
 window(sf::VideoMode(wSize.x, wSize.y), title, sf::Style::Close),
 entityMng(&resize),
-entityRen(Rect(Vector2D(20,5), Vector2D(50, 50)), wSize, &entityMng.getEntities()),
+entityRen(Rect(Vector2D(20,5), Vector2D(50, 50)), wSize, &entityMng.getEntities(), &resize),
 levelLoader(&entityMng)
 {
 	levelLoader.loadLevel("level_1.txt");
@@ -16,7 +16,7 @@ void Game::run()
 {
 	while(isRunning)
 	{
-		float dt = clock.restart().asSeconds() * 3;
+		float dt = clock.restart().asSeconds() * DT_MULTIPLIER;
 
 		handleEvents(dt);
 		update(dt);
@@ -34,11 +34,6 @@ void Game::update(float dt)
 
 void Game::render()
 {
-	if(resize) 
-	{
-		entityRen.resizeCamera(Vector2D(), window.getSize(), true);
-		resize = false;
-	}
 	entityRen.render(window);
 }
 

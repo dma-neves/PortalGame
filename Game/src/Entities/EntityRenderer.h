@@ -9,7 +9,7 @@
 class EntityRenderer
 {
 public:
-	EntityRenderer(Rect camera, Vector2D wSize, std::vector<Entity*>* entity);
+	EntityRenderer(Rect camera, Vector2D wSize, std::vector<Entity*>* entity, bool* resize);
 
 	void resizeCamera(Vector2D resizer, Vector2D wSize, bool scaleEntities);
 	void scaleEntities() { for(Entity* e : *entity) e->scale(scalar); }
@@ -29,6 +29,7 @@ private:
 
 	std::vector<Entity*>* entity;
 	std::vector<Entity*> viewEntity; //Viewable entity
+	bool* resize;
 };
 
 #endif
