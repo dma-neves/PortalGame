@@ -16,7 +16,7 @@ public:
 	Entity(Rect rect) : rect(rect) {}
 
 	virtual void update(float dt) {}
-	void render(sf::RenderWindow& window, Vector2D drawPos);
+	virtual void render(sf::RenderWindow& window, Vector2D drawPos);
 
 	void scale(float scalar);
 	void setTexture(std::string fileName, std::string texturePack);
