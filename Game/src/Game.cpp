@@ -9,7 +9,7 @@ levelLoader(&entityMng)
 	levelLoader.loadLevel("level_1.txt");
 
 	entityMng.addPortal(new Portal(Rect(Vector2D(0,0), Vector2D(1, 1)), "bluePortal.png", levelLoader.getPack(), Portal::BLUE));
-	entityMng.addPortal(new Portal(Rect(Vector2D(20,0), Vector2D(1, 1)), "redPortal.png", levelLoader.getPack(), Portal::RED));
+	entityMng.addPortal(new Portal(Rect(Vector2D(0,0), Vector2D(1, 1)), "redPortal.png", levelLoader.getPack(), Portal::RED));
 }
 
 void Game::run()
@@ -25,6 +25,21 @@ void Game::run()
 		render();
 		window.display();
 	}
+}
+
+void Game::update(float dt)
+{
+	entityMng.update(dt);
+}
+
+void Game::render()
+{
+	if(resize) 
+	{
+		entityRen.resizeCamera(Vector2D(), window.getSize(), true);
+		resize = false;
+	}
+	entityRen.render(window);
 }
 
 void Game::handleEvents(float dt)
@@ -47,7 +62,6 @@ void Game::handleEvents(float dt)
 
 	if(sf::Keyboard::isKeyPressed(sf::Keyboard::D))     entityMng.getPlayer().moveRight(); 
 	else if(sf::Keyboard::isKeyPressed(sf::Keyboard::A)) entityMng.getPlayer().moveLeft();
-	else entityMng.getPlayer().stop();
 
 	if(sf::Keyboard::isKeyPressed(sf::Keyboard::W)) entityMng.getPlayer().jump();
 
@@ -66,21 +80,6 @@ void Game::handleEvents(float dt)
 		Vector2D mousePos(sf::Mouse::getPosition(window));
 		shootPortal(mousePos, Portal::RED);
 	}
-}
-
-void Game::update(float dt)
-{
-	entityMng.update(dt);
-}
-
-void Game::render()
-{
-	if(resize) 
-	{
-		entityRen.resizeCamera(Vector2D(), window.getSize(), true);
-		resize = false;
-	}
-	entityRen.render(window);
 }
 
 void Game::shootPortal(Vector2D mousePos, Portal::Type type)

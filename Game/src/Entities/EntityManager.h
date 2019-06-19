@@ -8,6 +8,7 @@
 #include "Portal.h"
 #include "PortalProjectile.h"
 #include "VectorOp.h"
+#include "Array.h"
 
 class EntityManager
 {
@@ -28,6 +29,7 @@ public:
 	std::vector<Entity*>& getEntities() { return entity; }
 	std::vector<Entity*>& getColEntities() { return colEntity; }
 	Portal& getPortal(Portal::Type type) { return *portal[type].get(); }
+	Array<std::unique_ptr<Portal>, 2>& getPortals() { return portal; }
 	PortalProjectile& getPortalProjectile(Portal::Type type) { return *portalProj[type].get(); }
 
 	bool hasPortalProjectile(Portal::Type type);
@@ -38,10 +40,12 @@ private:
 
 	std::vector<std::unique_ptr<Entity>> staticBlock;
 	std::unique_ptr<Player> player;
-	std::unique_ptr<Portal> portal[2];
-	std::unique_ptr<PortalProjectile> portalProj[2];
+	Array<std::unique_ptr<Portal>, 2> portal;
+	Array<std::unique_ptr<PortalProjectile>, 2> portalProj;
 
 	bool* resize;
+
+	Portal** tempArr;
 };
 
 #endif

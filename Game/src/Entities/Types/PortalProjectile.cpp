@@ -1,7 +1,7 @@
 #include "PortalProjectile.h"
 
 PortalProjectile::PortalProjectile(Rect rect, std::string fileName, std::string texturePack, std::vector<Entity*>* colEntity, Portal::Type type) :
-DynamicEntity(rect, fileName, texturePack, colEntity, 0), type(type)
+DynamicEntity(rect, fileName, texturePack, colEntity, 0, 0), type(type)
 {
 }
 
@@ -23,8 +23,17 @@ void PortalProjectile::shoot(Vector2D direction)
     velocity.setMagnitude(SPEED);
 }
 
-void PortalProjectile::handleCollisionEffect(Collision colType, Direction colDir)
+void PortalProjectile::handleCollisionEffect(Collision colType, Direction colDir, std::vector<Entity*>& colliders)
 {
+    for(Entity* e : colliders)
+    {
+        if(dynamic_cast<Portal*>(e) != nullptr)
+        {
+            this->kill();
+            return;
+        }
+    }
+
     collision = colType;
     collisionDir = colDir;
 }

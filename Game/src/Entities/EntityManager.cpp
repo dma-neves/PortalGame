@@ -25,8 +25,8 @@ Player& EntityManager::addPlayer(Player* player)
 {
 	this->player.reset(player);
 
-	entity.push_back(player);
-	colEntity.push_back(player);
+	this->entity.push_back(player);
+	this->colEntity.push_back(player);
 	return *player;
 }
 
@@ -34,6 +34,7 @@ Portal& EntityManager::addPortal(Portal* portal)
 {
 	this->portal[portal->getType()].reset(portal);
 	this->entity.push_back(portal);
+	this->colEntity.push_back(portal);
 	return *portal;
 }
 

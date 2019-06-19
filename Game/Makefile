@@ -1,8 +1,8 @@
-LIB_DIRECTORY=/home/david/Desktop/David/Programming/C++/SFML-2.5.1/lib
-INC_DIRECOTRY=/home/david/Desktop/David/Programming/C++/SFML-2.5.1/include -I src -I src/Util -I src/AssetManagers -I src/Entities -I src/Entities/Types -I src/Level
+LIB_DIRECTORY=-lsfml-graphics -lsfml-window -lsfml-system
+INC_DIRECOTRY=src -I src/Util -I src/AssetManagers -I src/Entities -I src/Entities/Types -I src/Level
 LIBS = -lsfml-graphics -lsfml-window -lsfml-system
 
-CPPC=g++ -std=c++11
+CPPC=g++ -std=c++11 -g
 
 OBJECT_FILES=obj/main.o obj/Game.o obj/Vector2D.o obj/Rect.o obj/Entity.o obj/TextureManager.o obj/EntityRenderer.o
 OBJECT_FILES+=obj/Player.o obj/LevelLoader.o obj/DynamicEntity.o obj/EntityManager.o obj/Portal.o obj/PortalProjectile.o

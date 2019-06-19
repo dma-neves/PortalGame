@@ -36,7 +36,7 @@ void LevelLoader::loadLevel(std::string fileName)
 					break;
 
 				case 'P':
-					entityMng->addPlayer(new Player(Rect(Vector2D(x,y), Vector2D(1,1.8f)), "player.png", texturePack, &entityMng->getColEntities()));
+					entityMng->addPlayer(new Player(Rect(Vector2D(x,y), Vector2D(1,1.8f)), "player.png", texturePack, &entityMng->getColEntities(), &entityMng->getPortals()));
 					break;
 				}
 			}

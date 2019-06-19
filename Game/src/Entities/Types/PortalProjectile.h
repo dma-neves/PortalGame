@@ -23,7 +23,7 @@ public:
     
 private:
 
-    void handleCollisionEffect(Collision colType, Direction colDir) override;
+    void handleCollisionEffect(Collision colType, Direction colDir, std::vector<Entity*>& colliders) override;
 
 public:
 
