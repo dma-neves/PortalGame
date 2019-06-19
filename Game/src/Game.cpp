@@ -63,16 +63,16 @@ void Game::handleEvents(float dt)
 	if(!sf::Mouse::isButtonPressed(sf::Mouse::Left)) lMouseRel = true;
 	if(!sf::Mouse::isButtonPressed(sf::Mouse::Right)) rMouseRel = true;
 
+	Vector2D mousePos(sf::Mouse::getPosition(window));
+
 	if(lMouseRel && sf::Mouse::isButtonPressed(sf::Mouse::Left))
 	{
 		lMouseRel = false;
-		Vector2D mousePos(sf::Mouse::getPosition(window));
 		shootPortal(mousePos, Portal::BLUE);
 	}
 	if(rMouseRel && sf::Mouse::isButtonPressed(sf::Mouse::Right))
 	{
 		rMouseRel = false;
-		Vector2D mousePos(sf::Mouse::getPosition(window));
 		shootPortal(mousePos, Portal::RED);
 	}
 }
