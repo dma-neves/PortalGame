@@ -1,7 +1,7 @@
 #ifndef RECT_H
 #define RECT_H
 
-#include "LineSegment.h"
+#include "Vector2D.h"
 
 class Rect
 {
