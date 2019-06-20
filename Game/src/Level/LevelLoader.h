@@ -16,12 +16,10 @@ public:
 	LevelLoader(EntityManager* entityMng);
 
 	void loadLevel(std::string fileName);
-
 	std::string getPack() { return texturePack; }
 
 private:
 	std::string texturePack;
-	Vector2D size;
 
 	EntityManager* entityMng;
 };

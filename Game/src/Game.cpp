@@ -25,7 +25,7 @@ void Game::run()
 			handleEvents(pdt);
 			update(pdt);
 
-			window.clear(sf::Color(2, 3, 43));
+			window.clear(sf::Color(CLEAR_COLOR));
 			render();
 			window.display();
 		}

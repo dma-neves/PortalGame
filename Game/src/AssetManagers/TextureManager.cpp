@@ -18,5 +18,5 @@ sf::Texture TextureManager::loadTexture(std::string newFileDir)
     fileDir.push_back(newFileDir);
     texture.push_back(newTexture);
 
-    return texture[texture.size()-1];
+    return newTexture;
 }

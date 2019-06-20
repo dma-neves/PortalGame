@@ -18,6 +18,7 @@ void LevelLoader::loadLevel(std::string fileName)
 	else
 	{
 		entityMng->reset();
+		Vector2D size;
 
 		levelFile >> texturePack;
 		levelFile >> size.x >> size.y;

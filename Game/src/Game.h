@@ -2,6 +2,7 @@
 #define GAME
 
 #define DT_MULTIPLIER 3
+#define CLEAR_COLOR 2, 3, 43
 
 #include <SFML/Graphics.hpp>
 #include <vector>

@@ -1,7 +1,5 @@
 #include "Vector2D.h"
 
-#include <iostream>
-
 Vector2D::Vector2D(float x, float y)
 {
     this->x = x;
@@ -81,10 +79,7 @@ void Vector2D::operator=(float num)
         this->x = 0;
         this->y = 0;
     }
-    else
-    {
-        std::cout << "Invalid Vector2D Operation" << std::endl;
-    }
+    else std::cout << "Error: Invalid Vector2D operation" << std::endl;
 }
 
 Vector2D& Vector2D::setMagnitude(float mag)
@@ -114,7 +109,9 @@ float Vector2D::angle(Vector2D vec)
 
     if(c >= -1 and c <= 1) return acos(c);
 
-    else std::cout << "Error: Invalid Cos Value: " << c << std::endl;
+    else std::cout << "Error: Invalid cos value: " << c << std::endl;
+
+    return 0;
 }
 
 void Vector2D::rotate(float angle)
