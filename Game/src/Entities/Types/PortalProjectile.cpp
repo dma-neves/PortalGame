@@ -31,27 +31,29 @@ void PortalProjectile::handleCollisionEffect(std::pair<Collision, Direction> col
         }
     }
 
-    if(collision.first != DynamicEntity::Collision::NON)
+    if(collision.first != DynamicEntity::Collision::NON) repositionPortal(collision);
+}
+
+void PortalProjectile::repositionPortal(std::pair<Collision, Direction>& collision)
+{
+    Vector2D direction;
+    switch(collision.second)
     {
-        Vector2D direction;
-        switch(collision.second)
-        {
-            case DynamicEntity::UP: direction.y = 1; break;
+        case DynamicEntity::UP: direction.y = 1; break;
 
-            case DynamicEntity::DOWN: direction.y = -1; break;
+        case DynamicEntity::DOWN: direction.y = -1; break;
 
-            case DynamicEntity::LEFT: direction.x = 1; break;
+        case DynamicEntity::LEFT: direction.x = 1; break;
 
-            case DynamicEntity::RIGHT: direction.x = -1; break;
-        }
-
-        (*portal)[getType()]->reposition( getRect().pos, direction );
-
-        Rect& portalRect = (*portal)[getType()]->getRect();
-        float dim = std::min(portalRect.size.x, portalRect.size.y);
-        portalRect.size = collision.first == DynamicEntity::Collision::HORIZONTAL ? Vector2D(dim, dim*2) : Vector2D(dim*2, dim);
-        *resize = true;
-
-        kill();
+        case DynamicEntity::RIGHT: direction.x = -1; break;
     }
+
+    (*portal)[getType()]->reposition( getRect().pos, direction );
+
+    Rect& portalRect = (*portal)[getType()]->getRect();
+    float dim = std::min(portalRect.size.x, portalRect.size.y);
+    portalRect.size = collision.first == DynamicEntity::Collision::HORIZONTAL ? Vector2D(dim, dim*2) : Vector2D(dim*2, dim);
+    *resize = true;
+
+    kill();
 }

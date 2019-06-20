@@ -18,12 +18,17 @@ void Game::run()
 	{
 		float dt = clock.restart().asSeconds() * DT_MULTIPLIER;
 
-		handleEvents(dt);
-		update(dt);
+		for(int i = 0; i < dt; i++)
+		{
+			float pdt = i == 0 ? (dt - (int)dt) : 1;
 
-		window.clear(sf::Color(2, 3, 43));
-		render();
-		window.display();
+			handleEvents(pdt);
+			update(pdt);
+
+			window.clear(sf::Color(2, 3, 43));
+			render();
+			window.display();
+		}
 	}
 }
 

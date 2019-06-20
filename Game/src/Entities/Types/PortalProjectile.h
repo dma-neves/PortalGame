@@ -8,8 +8,6 @@
 #define SPEED 4
 #define LIFE_SPAN 8
 
-class EntityManager;
-
 class PortalProjectile : public DynamicEntity
 {
 public:
@@ -25,6 +23,7 @@ public:
 private:
 
     void handleCollisionEffect(std::pair<Collision, Direction> collision, std::vector<Entity*>& colliders) override;
+    void repositionPortal(std::pair<Collision, Direction>& collision);
 
 public:
 
