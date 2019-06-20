@@ -1,5 +1,5 @@
-LIB_DIRECTORY=-lsfml-graphics -lsfml-window -lsfml-system
-INC_DIRECOTRY=src -I src/Util -I src/AssetManagers -I src/Entities -I src/Entities/Types -I src/Level -I src/Events -I src/Events/EntityEvents
+INC_DIRECOTRY=src -I src/Util -I src/AssetManagers -I src/Entities -I src/Entities/Types -I src/Level -I src/Events 
+INC_DIRECOTRY+=-I src/Events/EntityEvents
 LIBS = -lsfml-graphics -lsfml-window -lsfml-system
 
 CPPC=g++ -std=c++11 -g
@@ -9,7 +9,7 @@ OBJECT_FILES+=obj/Player.o obj/LevelLoader.o obj/DynamicEntity.o obj/EntityManag
 OBJECT_FILES+=obj/DynamicBlock.o
 
 PortalGame: $(OBJECT_FILES)
-	$(CPPC) $(OBJECT_FILES) -o bin/PortalGame -L $(LIB_DIRECTORY) $(LIBS)
+	$(CPPC) $(OBJECT_FILES) -o bin/PortalGame $(LIBS)
 
 obj/main.o: main.cpp
 	$(CPPC) -c main.cpp -I $(INC_DIRECOTRY) -o obj/main.o
