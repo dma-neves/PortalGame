@@ -1,19 +1,12 @@
 #include "DynamicEntity.h"
 #include "StaticBlock.h"
 
-DynamicEntity::DynamicEntity(Rect rect, std::string fileName, std::string texturePack, std::vector<Entity*>* colEntity, float gravity, float resistance) :
+DynamicEntity::DynamicEntity(Rect rect, std::string fileName, std::string texturePack, std::vector<Entity*>* colEntity, 
+float gravity, float resistance) :
 Entity(rect, fileName, texturePack), 
 gravity(gravity),
 resistance(resistance),
 colEntity(colEntity)
-{
-}
-
-DynamicEntity::DynamicEntity(Rect rect, std::vector<Entity*>* colEntity, float gravity, float resistance) : 
-Entity(rect), 
-colEntity(colEntity), 
-gravity(gravity),
-resistance(resistance)
 {
 }
 
@@ -36,32 +29,28 @@ void DynamicEntity::handleCollision(Vector2D updatedPos)
 	Rect updatedRect = rect;
 	updatedRect.pos = updatedPos;
 
-	Collision colType = Collision::NON;
-	Direction colDir = Direction::UNDEFINED;
+	std::pair<Collision, Direction> collision = {Collision::NON, Direction::UNDEFINED};
 	std::vector<Entity*> colliders;
 
-	for(int i = 0; i < colEntity->size() && !velocity.null(); i++)
+	for(Entity* e : *colEntity)
 	{
-		Entity* e = (*colEntity)[i];
 		if(e != this && updatedRect.intersects(e->getRect()))
 		{
 			colliders.push_back(e);
-			std::pair<Collision, Direction> collsion = getCollision(rect, e->getRect(), updatedPos);
-			colType = collsion.first;
-			colDir = collsion.second;
+			collision = getCollision(rect, e->getRect(), updatedPos);
 
 			if(dynamic_cast<StaticBlock*>(e) != nullptr)
 			{
-				if(colType == HORIZONTAL)    { velocity.x = 0; }
-				else if(colType == VERTICAL) { velocity.y = 0; }
+				if(collision.first == HORIZONTAL)    { velocity.x = 0; }
+				else if(collision.first == VERTICAL) { velocity.y = 0; }
 			}
 
-			if(colType == VERTICAL && rect.pos.y < e->getRect().pos.y) onGround = true;
+			if(collision.first == VERTICAL && rect.pos.y < e->getRect().pos.y) onGround = true;
 		}
 	}
 	if(velocity.y > 0) onGround = false;
 
-	if(colType != Collision::NON) handleCollisionEffect(colType, colDir, colliders);
+	if(collision.first != Collision::NON) handleCollisionEffect(collision, colliders);
 }
 
 std::pair<DynamicEntity::Collision, DynamicEntity::Direction> DynamicEntity::getCollision(Rect& dRect, Rect& cRect, Vector2D& updatedPos)

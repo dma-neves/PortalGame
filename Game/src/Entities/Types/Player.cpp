@@ -5,11 +5,7 @@ DynamicEntity(rect, fileName, texturePack, colEntity), portal(portal)
 {
 }
 
-Player::Player(Rect rect, std::vector<Entity*>* colEntity) : DynamicEntity(rect, colEntity)
-{
-}
-
-void Player::handleCollisionEffect(Collision colType, Direction colDir, std::vector<Entity*>& colliders)
+void Player::handleCollisionEffect(std::pair<Collision, Direction> collision, std::vector<Entity*>& colliders)
 {
     Portal* portal = nullptr;
     for(std::vector<Entity*>::iterator ei = colliders.begin(); ei != colliders.end() && portal == nullptr; ei++)
@@ -20,7 +16,7 @@ void Player::handleCollisionEffect(Collision colType, Direction colDir, std::vec
     if(portal != nullptr && portal->initialized())
     {
         Portal* destPortal = portal->getType() == Portal::Type::BLUE ? getPortal(Portal::Type::RED) : getPortal(Portal::Type::BLUE);
-        if(destPortal->initialized()) gotoPortal(colType, portal, destPortal);
+        if(destPortal->initialized()) gotoPortal(collision.first, portal, destPortal);
     }
 }
 

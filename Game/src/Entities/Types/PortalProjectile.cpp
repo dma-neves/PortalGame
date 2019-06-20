@@ -1,11 +1,8 @@
 #include "PortalProjectile.h"
 
-PortalProjectile::PortalProjectile(Rect rect, std::string fileName, std::string texturePack, std::vector<Entity*>* colEntity, Portal::Type type) :
-DynamicEntity(rect, fileName, texturePack, colEntity, 0, 0), type(type)
-{
-}
-
-PortalProjectile::PortalProjectile(Rect rect, std::vector<Entity*>* colEntity) : DynamicEntity(rect, colEntity)
+PortalProjectile::PortalProjectile(Rect rect, std::string fileName, std::string texturePack, std::vector<Entity*>* colEntity,
+Portal::Type type, Array<std::unique_ptr<Portal>, 2>* portal, bool* resize) :
+DynamicEntity(rect, fileName, texturePack, colEntity, 0, 0), type(type), portal(portal), resize(resize)
 {
 }
 
@@ -23,7 +20,7 @@ void PortalProjectile::shoot(Vector2D direction)
     velocity.setMagnitude(SPEED);
 }
 
-void PortalProjectile::handleCollisionEffect(Collision colType, Direction colDir, std::vector<Entity*>& colliders)
+void PortalProjectile::handleCollisionEffect(std::pair<Collision, Direction> collision, std::vector<Entity*>& colliders)
 {
     for(Entity* e : colliders)
     {
@@ -34,6 +31,27 @@ void PortalProjectile::handleCollisionEffect(Collision colType, Direction colDir
         }
     }
 
-    collision = colType;
-    collisionDir = colDir;
+    if(collision.first != DynamicEntity::Collision::NON)
+    {
+        Vector2D direction;
+        switch(collision.second)
+        {
+            case DynamicEntity::UP: direction.y = 1; break;
+
+            case DynamicEntity::DOWN: direction.y = -1; break;
+
+            case DynamicEntity::LEFT: direction.x = 1; break;
+
+            case DynamicEntity::RIGHT: direction.x = -1; break;
+        }
+
+        (*portal)[getType()]->reposition( getRect().pos, direction );
+
+        Rect& portalRect = (*portal)[getType()]->getRect();
+        float dim = std::min(portalRect.size.x, portalRect.size.y);
+        portalRect.size = collision.first == DynamicEntity::Collision::HORIZONTAL ? Vector2D(dim, dim*2) : Vector2D(dim*2, dim);
+        *resize = true;
+
+        kill();
+    }
 }

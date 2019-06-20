@@ -1,5 +1,5 @@
 LIB_DIRECTORY=-lsfml-graphics -lsfml-window -lsfml-system
-INC_DIRECOTRY=src -I src/Util -I src/AssetManagers -I src/Entities -I src/Entities/Types -I src/Level
+INC_DIRECOTRY=src -I src/Util -I src/AssetManagers -I src/Entities -I src/Entities/Types -I src/Level -I src/Events -I src/Events/EntityEvents
 LIBS = -lsfml-graphics -lsfml-window -lsfml-system
 
 CPPC=g++ -std=c++11 -g

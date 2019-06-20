@@ -19,7 +19,6 @@ public:
 
 	void reset();
 	void update(float dt);
-	void handleUpdate(Entity* entity);
 	void eraseDeadEntities();
 
 	Player& addPlayer(Player* player);
@@ -48,8 +47,6 @@ private:
 	Array<std::unique_ptr<PortalProjectile>, 2> portalProj;
 
 	bool* resize;
-
-	Portal** tempArr;
 };
 
 #endif

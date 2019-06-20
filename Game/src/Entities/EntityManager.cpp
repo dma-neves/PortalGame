@@ -13,11 +13,8 @@ void EntityManager::reset()
 
 void EntityManager::update(float dt)
 {
-	for(Entity* e : entity) 
-	{
-		e->update(dt);
-		handleUpdate(e);
-	}
+	for(Entity* e : entity) e->update(dt);
+
 	eraseDeadEntities();
 }
 
@@ -64,38 +61,6 @@ PortalProjectile& EntityManager::addPortalProjectile(PortalProjectile* portalPro
 	this->entity.push_back(portalProjectile);
 	this->colEntity.push_back(portalProjectile);
 	return *portalProjectile;
-}
-
-void EntityManager::handleUpdate(Entity* entity)
-{
-	PortalProjectile* portalProj = dynamic_cast<PortalProjectile*>(entity);
-
-	if(portalProj != nullptr)
-	{
-		if(portalProj->collision != DynamicEntity::Collision::NON)
-		{
-			Vector2D direction;
-			switch(portalProj->getCollisionDirection())
-			{
-				case DynamicEntity::UP: direction.y = 1; break;
-
-				case DynamicEntity::DOWN: direction.y = -1; break;
-
-				case DynamicEntity::LEFT: direction.x = 1; break;
-
-				case DynamicEntity::RIGHT: direction.x = -1; break;
-			}
-
-			portal[portalProj->getType()]->reposition( portalProj->getRect().pos, direction );
-
-			Rect& portalRect = portal[portalProj->getType()]->getRect();
-			float dim = std::min(portalRect.size.x, portalRect.size.y);
-			portalRect.size = portalProj->collision == DynamicEntity::Collision::HORIZONTAL ? Vector2D(dim, dim*2) : Vector2D(dim*2, dim);
-			*resize = true;
-
-			portalProj->kill();
-		}
-	}
 }
 
 void EntityManager::eraseDeadEntities()

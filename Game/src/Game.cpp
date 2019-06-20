@@ -103,7 +103,8 @@ void Game::shootPortal(Vector2D mousePos, Portal::Type type)
 		if(valid)
 		{
 			std::string textureFile = type == Portal::Type::BLUE ? "bluePortal.png" : "redPortal.png";
-			PortalProjectile& portalProj = entityMng.addPortalProjectile( new PortalProjectile(rect, textureFile, levelLoader.getPack(), &entityMng.getColEntities(), type) );
+			PortalProjectile& portalProj = entityMng.addPortalProjectile( new PortalProjectile(rect, textureFile, 
+			levelLoader.getPack(), &entityMng.getColEntities(), type, &entityMng.getPortals(), &resize) );
 			portalProj.shoot(direction);
 			resize = true;
 		}

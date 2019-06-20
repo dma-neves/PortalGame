@@ -16,12 +16,12 @@ public:
 	enum Collision {VERTICAL = 0, HORIZONTAL, NON};
 	enum Direction {UP, DOWN, LEFT, RIGHT, UNDEFINED};
 
-	DynamicEntity(Rect rect, std::string fileName, std::string texturePack, std::vector<Entity*>* colEntity, float gravity = DEFAULT_GRAVITY, float resistance = DEFAULT_RESISTANCE);
-	DynamicEntity(Rect rect, std::vector<Entity*>* colEntity, float gravity = DEFAULT_GRAVITY, float resistance = DEFAULT_RESISTANCE);
+	DynamicEntity(Rect rect, std::string fileName, std::string texturePack, std::vector<Entity*>* colEntity, 
+	float gravity = DEFAULT_GRAVITY, float resistance = DEFAULT_RESISTANCE);
 
 	void update(float dt) override;
 	void handleCollision(Vector2D updatedPos);
-	virtual void handleCollisionEffect(Collision colType, Direction colDir, std::vector<Entity*>& colliders) {}
+	virtual void handleCollisionEffect(std::pair<Collision, Direction> collision, std::vector<Entity*>& colliders) {}
 
 	bool isOnGround() { return onGround; }
 

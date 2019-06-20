@@ -4,7 +4,3 @@ DynamicBlock::DynamicBlock(Rect rect, std::string fileName, std::string textureP
 DynamicEntity(rect, fileName, texturePack, colEntity)
 {
 }
-
-DynamicBlock::DynamicBlock(Rect rect, std::vector<Entity*>* colEntity) : DynamicEntity(rect, colEntity)
-{
-}

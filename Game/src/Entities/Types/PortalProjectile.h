@@ -3,36 +3,37 @@
 
 #include "DynamicEntity.h"
 #include "Portal.h"
+#include "Array.h"
 
 #define SPEED 4
 #define LIFE_SPAN 8
+
+class EntityManager;
 
 class PortalProjectile : public DynamicEntity
 {
 public:
 
-	PortalProjectile(Rect rect, std::string fileName, std::string texturePack, std::vector<Entity*>* colEntity, Portal::Type type);
-	PortalProjectile(Rect rect, std::vector<Entity*>* colEntity);
+	PortalProjectile(Rect rect, std::string fileName, std::string texturePack, std::vector<Entity*>* colEntity, 
+    Portal::Type type, Array<std::unique_ptr<Portal>, 2>* portal, bool* resize);
 
     void update(float dt) override;
 
     void shoot(Vector2D direction);
     Portal::Type getType() { return type; };
-
-    Direction getCollisionDirection() { return collisionDir; }
     
 private:
 
-    void handleCollisionEffect(Collision colType, Direction colDir, std::vector<Entity*>& colliders) override;
+    void handleCollisionEffect(std::pair<Collision, Direction> collision, std::vector<Entity*>& colliders) override;
 
 public:
 
     Portal::Type type;
-    Collision collision = Collision::NON;
-    Direction collisionDir = Direction::UNDEFINED;
+    std::pair<Collision, Direction> collision = {DynamicEntity::Collision::NON, DynamicEntity::Direction::UNDEFINED};
 
 private:
-
+    Array<std::unique_ptr<Portal>, 2>* portal;
+    bool* resize;
     float timer = 0;
 };
 
