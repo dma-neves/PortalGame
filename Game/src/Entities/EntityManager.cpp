@@ -9,6 +9,7 @@ void EntityManager::reset()
 	entity.clear();
 	colEntity.clear();
 	staticBlock.clear();
+	dynamicBlock.clear();
 }
 
 void EntityManager::update(float dt)
