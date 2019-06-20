@@ -7,6 +7,8 @@
 #include "Player.h"
 #include "Portal.h"
 #include "PortalProjectile.h"
+#include "StaticBlock.h"
+#include "DynamicBlock.h"
 #include "VectorOp.h"
 #include "Array.h"
 
@@ -22,7 +24,8 @@ public:
 
 	Player& addPlayer(Player* player);
 	Portal& addPortal(Portal* portal);
-	Entity& addStaticBlock(Entity* staticBlock);
+	StaticBlock& addStaticBlock(StaticBlock* staticBlock);
+	DynamicBlock& addDynamicBlock(DynamicBlock* dynamicBlock);
 	PortalProjectile& addPortalProjectile(PortalProjectile* portalProjectile);
 
 	Player& getPlayer() { return *player.get(); }
@@ -38,7 +41,8 @@ private:
 	std::vector<Entity*> entity;
 	std::vector<Entity*> colEntity; //Colliadable entity
 
-	std::vector<std::unique_ptr<Entity>> staticBlock;
+	std::vector<std::unique_ptr<StaticBlock>> staticBlock;
+	std::vector<std::unique_ptr<DynamicBlock>> dynamicBlock;
 	std::unique_ptr<Player> player;
 	Array<std::unique_ptr<Portal>, 2> portal;
 	Array<std::unique_ptr<PortalProjectile>, 2> portalProj;

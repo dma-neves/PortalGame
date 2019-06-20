@@ -5,6 +5,7 @@
 #include <fstream>
 
 #include "StaticBlock.h"
+#include "DynamicBlock.h"
 #include "Player.h"
 #include "TextureManager.h"
 #include "EntityManager.h"

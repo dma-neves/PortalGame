@@ -38,14 +38,24 @@ Portal& EntityManager::addPortal(Portal* portal)
 	return *portal;
 }
 
-Entity& EntityManager::addStaticBlock(Entity* staticBlock)
+StaticBlock& EntityManager::addStaticBlock(StaticBlock* staticBlock)
 {
-	std::unique_ptr<Entity> uptr(staticBlock);
+	std::unique_ptr<StaticBlock> uptr(staticBlock);
 	this->staticBlock.push_back(std::move(uptr));
 
 	this->entity.push_back(staticBlock);
 	this->colEntity.push_back(staticBlock);
 	return *staticBlock;
+}
+
+DynamicBlock& EntityManager::addDynamicBlock(DynamicBlock* dynamicBlock)
+{
+	std::unique_ptr<DynamicBlock> uptr(dynamicBlock);
+	this->dynamicBlock.push_back(std::move(uptr));
+
+	this->entity.push_back(dynamicBlock);
+	this->colEntity.push_back(dynamicBlock);
+	return *dynamicBlock;
 }
 
 PortalProjectile& EntityManager::addPortalProjectile(PortalProjectile* portalProjectile)

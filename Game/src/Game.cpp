@@ -8,8 +8,8 @@ levelLoader(&entityMng)
 {
 	levelLoader.loadLevel("level_1.txt");
 
-	entityMng.addPortal(new Portal(Rect(Vector2D(0,0), Vector2D(1, 1)), "bluePortal.png", levelLoader.getPack(), Portal::BLUE));
-	entityMng.addPortal(new Portal(Rect(Vector2D(0,0), Vector2D(1, 1)), "redPortal.png", levelLoader.getPack(), Portal::RED));
+	entityMng.addPortal(new Portal(Rect(Vector2D(), Vector2D(1, 1)), "bluePortal.png", levelLoader.getPack(), Portal::BLUE));
+	entityMng.addPortal(new Portal(Rect(Vector2D(), Vector2D(1, 1)), "redPortal.png", levelLoader.getPack(), Portal::RED));
 }
 
 void Game::run()

@@ -32,11 +32,17 @@ void LevelLoader::loadLevel(std::string fileName)
 				switch(tile)
 				{
 				case '#':
-					entityMng->addStaticBlock(new StaticBlock(Rect(Vector2D(x, y), Vector2D(1,1)), "staticBlock.png", texturePack));
+					entityMng->addStaticBlock(new StaticBlock(Rect(Vector2D(x, y), Vector2D(1,1)), 
+					"staticBlock.png", texturePack));
 					break;
 
 				case 'P':
-					entityMng->addPlayer(new Player(Rect(Vector2D(x,y), Vector2D(1,1.8f)), "player.png", texturePack, &entityMng->getColEntities(), &entityMng->getPortals()));
+					entityMng->addPlayer(new Player(Rect(Vector2D(x,y), Vector2D(1,1.8f)), 
+					"player.png", texturePack, &entityMng->getColEntities(), &entityMng->getPortals()));
+					break;
+				case 'O':
+					entityMng->addDynamicBlock(new DynamicBlock(Rect(Vector2D(x, y), Vector2D(1,1)), 
+					"dynamicBlock.png", texturePack, &entityMng->getColEntities()));
 					break;
 				}
 			}
