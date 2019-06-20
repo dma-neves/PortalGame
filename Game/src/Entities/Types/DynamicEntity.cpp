@@ -1,6 +1,5 @@
 #include "DynamicEntity.h"
-
-#include "Portal.h"
+#include "StaticBlock.h"
 
 DynamicEntity::DynamicEntity(Rect rect, std::string fileName, std::string texturePack, std::vector<Entity*>* colEntity, float gravity, float resistance) :
 Entity(rect, fileName, texturePack), 
@@ -51,7 +50,7 @@ void DynamicEntity::handleCollision(Vector2D updatedPos)
 			colType = collsion.first;
 			colDir = collsion.second;
 
-			if(dynamic_cast<Portal*>(e) == nullptr)
+			if(dynamic_cast<StaticBlock*>(e) != nullptr)
 			{
 				if(colType == HORIZONTAL)    { velocity.x = 0; }
 				else if(colType == VERTICAL) { velocity.y = 0; }

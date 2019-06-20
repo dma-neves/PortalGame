@@ -33,9 +33,3 @@ void Player::gotoPortal(Collision colType, Portal* originPortal, Portal* destPor
     velocity = destPortal->getDirection();
     velocity.setMagnitude(mag);
 }
-
-Portal* Player::getPortal(Portal::Type type)
-{
-    auto pt = *portal;
-    return ( pt[type] ).get();
-}

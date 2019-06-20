@@ -32,7 +32,7 @@ void LevelLoader::loadLevel(std::string fileName)
 				switch(tile)
 				{
 				case '#':
-					entityMng->addStaticBlock(new Entity(Rect(Vector2D(x, y), Vector2D(1,1)), "staticBlock.png", texturePack));
+					entityMng->addStaticBlock(new StaticBlock(Rect(Vector2D(x, y), Vector2D(1,1)), "staticBlock.png", texturePack));
 					break;
 
 				case 'P':

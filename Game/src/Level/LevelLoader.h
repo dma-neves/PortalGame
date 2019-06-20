@@ -4,6 +4,7 @@
 #include <vector>
 #include <fstream>
 
+#include "StaticBlock.h"
 #include "Player.h"
 #include "TextureManager.h"
 #include "EntityManager.h"

@@ -1,6 +1,9 @@
 #ifndef ARRAY
 #define ARRAY
 
+#include <iostream>
+#include <memory>
+
 template <typename T, int s>
 class Array
 {

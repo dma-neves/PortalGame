@@ -49,31 +49,34 @@ void Game::handleEvents(float dt)
 		}
 	}
 
-	if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+	if(window.hasFocus())
 	{
-		isRunning = false;
-		window.close();
-	}
+		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+		{
+			isRunning = false;
+			window.close();
+		}
 
-	if(sf::Keyboard::isKeyPressed(sf::Keyboard::D))     entityMng.getPlayer().moveRight(); 
-	else if(sf::Keyboard::isKeyPressed(sf::Keyboard::A)) entityMng.getPlayer().moveLeft();
+		if(sf::Keyboard::isKeyPressed(sf::Keyboard::D))     entityMng.getPlayer().moveRight(); 
+		else if(sf::Keyboard::isKeyPressed(sf::Keyboard::A)) entityMng.getPlayer().moveLeft();
 
-	if(sf::Keyboard::isKeyPressed(sf::Keyboard::W)) entityMng.getPlayer().jump();
+		if(sf::Keyboard::isKeyPressed(sf::Keyboard::W)) entityMng.getPlayer().jump();
 
-	if(!sf::Mouse::isButtonPressed(sf::Mouse::Left)) lMouseRel = true;
-	if(!sf::Mouse::isButtonPressed(sf::Mouse::Right)) rMouseRel = true;
+		if(!sf::Mouse::isButtonPressed(sf::Mouse::Left)) lMouseRel = true;
+		if(!sf::Mouse::isButtonPressed(sf::Mouse::Right)) rMouseRel = true;
 
-	Vector2D mousePos(sf::Mouse::getPosition(window));
+		Vector2D mousePos(sf::Mouse::getPosition(window));
 
-	if(lMouseRel && sf::Mouse::isButtonPressed(sf::Mouse::Left))
-	{
-		lMouseRel = false;
-		shootPortal(mousePos, Portal::BLUE);
-	}
-	if(rMouseRel && sf::Mouse::isButtonPressed(sf::Mouse::Right))
-	{
-		rMouseRel = false;
-		shootPortal(mousePos, Portal::RED);
+		if(lMouseRel && sf::Mouse::isButtonPressed(sf::Mouse::Left))
+		{
+			lMouseRel = false;
+			shootPortal(mousePos, Portal::BLUE);
+		}
+		if(rMouseRel && sf::Mouse::isButtonPressed(sf::Mouse::Right))
+		{
+			rMouseRel = false;
+			shootPortal(mousePos, Portal::RED);
+		}
 	}
 }
 

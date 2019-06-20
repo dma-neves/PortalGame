@@ -23,7 +23,7 @@ public:
 	void gotoPortal(Collision colType, Portal* originPortal, Portal* destPortal);
 
 private:
-	Portal* getPortal(Portal::Type type);
+	Portal* getPortal(Portal::Type type) { return (*portal)[type].get(); }
 
 private:
 	float speed = 2;
