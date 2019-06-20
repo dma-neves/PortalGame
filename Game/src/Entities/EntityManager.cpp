@@ -22,7 +22,6 @@ void EntityManager::update(float dt)
 Player& EntityManager::addPlayer(Player* player)
 {
 	this->player.reset(player);
-
 	this->entity.push_back(player);
 	this->colEntity.push_back(player);
 	return *player;
@@ -66,6 +65,16 @@ PortalProjectile& EntityManager::addPortalProjectile(PortalProjectile* portalPro
 
 void EntityManager::eraseDeadEntities()
 {
+	for(int i = 0; i < staticBlock.size(); i++)
+	{
+		if(!staticBlock[i]->isAlive()) staticBlock.erase(staticBlock.begin() + i);
+	}
+
+	for(int i = 0; i < dynamicBlock.size(); i++)
+	{
+		if(!dynamicBlock[i]->isAlive()) dynamicBlock.erase(dynamicBlock.begin() + i);
+	}
+
 	for(int i = 0; i < colEntity.size(); i++)
 	{
 		if(!colEntity[i]->isAlive()) colEntity.erase(colEntity.begin() + i);

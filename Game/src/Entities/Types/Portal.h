@@ -8,8 +8,7 @@ class Portal : public Entity
 public:
     enum Type {RED = 0, BLUE};
 
-    Portal(Rect rect, std::string fileName, std::string texturePack, Type type);
-    Portal(Rect rect, Type type);
+    Portal(Rect rect, std::string fileName, std::string texturePack, Type type) : Entity(rect, fileName, texturePack), type(type) {}
 
     void render(sf::RenderWindow& window, Vector2D drawPos) override { if(init) Entity::render(window, drawPos); }
 

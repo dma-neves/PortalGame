@@ -25,12 +25,9 @@ private:
     void handleCollisionEffect(std::pair<Collision, Direction> collision, std::vector<Entity*>& colliders) override;
     void repositionPortal(std::pair<Collision, Direction>& collision);
 
-public:
-
-    Portal::Type type;
-    std::pair<Collision, Direction> collision = {DynamicEntity::Collision::NON, DynamicEntity::Direction::UNDEFINED};
-
 private:
+    Portal::Type type;
+
     Array<std::unique_ptr<Portal>, 2>* portal;
     bool* resize;
     float timer = 0;

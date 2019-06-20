@@ -5,8 +5,7 @@ LIBS = -lsfml-graphics -lsfml-window -lsfml-system
 CPPC=g++ -std=c++11 -g
 
 OBJECT_FILES=obj/main.o obj/Game.o obj/Vector2D.o obj/Rect.o obj/Entity.o obj/TextureManager.o obj/EntityRenderer.o
-OBJECT_FILES+=obj/Player.o obj/LevelLoader.o obj/DynamicEntity.o obj/EntityManager.o obj/Portal.o obj/PortalProjectile.o
-OBJECT_FILES+=obj/DynamicBlock.o
+OBJECT_FILES+=obj/Player.o obj/LevelLoader.o obj/DynamicEntity.o obj/EntityManager.o obj/PortalProjectile.o obj/DynamicBlock.o
 
 PortalGame: $(OBJECT_FILES)
 	$(CPPC) $(OBJECT_FILES) -o bin/PortalGame $(LIBS)
@@ -43,9 +42,6 @@ obj/DynamicEntity.o: src/Entities/Types/DynamicEntity.cpp src/Entities/Types/Dyn
 
 obj/EntityManager.o: src/Entities/EntityManager.cpp src/Entities/EntityManager.h
 	$(CPPC) -c src/Entities/EntityManager.cpp -I $(INC_DIRECOTRY) -o obj/EntityManager.o
-
-obj/Portal.o: src/Entities/Types/Portal.cpp src/Entities/Types/Portal.h
-	$(CPPC) -c src/Entities/Types/Portal.cpp -I $(INC_DIRECOTRY) -o obj/Portal.o
 
 obj/PortalProjectile.o: src/Entities/Types/PortalProjectile.cpp src/Entities/Types/PortalProjectile.h
 	$(CPPC) -c src/Entities/Types/PortalProjectile.cpp -I $(INC_DIRECOTRY) -o obj/PortalProjectile.o
