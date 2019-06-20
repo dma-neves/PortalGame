@@ -19,7 +19,6 @@ public:
 
 	void reset();
 	void update(float dt);
-	void eraseDeadEntities();
 
 	Player& addPlayer(Player* player);
 	Portal& addPortal(Portal* portal);
@@ -35,6 +34,9 @@ public:
 	PortalProjectile& getPortalProjectile(Portal::Type type) { return *portalProj[type].get(); }
 
 	bool hasPortalProjectile(Portal::Type type);
+
+private:
+	void eraseDeadEntities();
 
 private:
 	std::vector<Entity*> entity;
