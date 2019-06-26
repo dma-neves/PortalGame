@@ -1,7 +1,8 @@
 #include "Player.h"
 
-Player::Player(Rect rect, std::string fileName, std::string texturePack, std::vector<Entity*>* colEntity, Array<std::unique_ptr<Portal>, 2>* portal) :
-DynamicEntity(rect, fileName, texturePack, colEntity), portal(portal)
+Player::Player(Rect rect, std::string fileName, std::string texturePack, std::vector<Entity*>* dynamicEntities,
+Array<std::unique_ptr<Portal>, 2>* portals) :
+DynamicEntity(rect, fileName, texturePack, dynamicEntities), portals(portals)
 {
 }
 

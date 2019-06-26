@@ -1,7 +1,7 @@
 #include "EntityRenderer.h"
 
-EntityRenderer::EntityRenderer(Rect camera, Vector2D wSize, std::vector<Entity*>* entity, bool* resize) :
-camera(camera), entity(entity), resize(resize)
+EntityRenderer::EntityRenderer(Rect camera, Vector2D wSize, std::vector<Entity*>* entities, bool* resize) :
+camera(camera), entities(entities), resize(resize)
 {
 }
 
@@ -21,10 +21,10 @@ void EntityRenderer::resizeCamera(Vector2D resizer, Vector2D wSize, bool scaleEn
 
 void EntityRenderer::updateViewableEntities()
 {
-	viewEntity.clear();
-	for(Entity* e : *entity)
+	viewEntities.clear();
+	for(Entity* e : *entities)
 	{
-		if(camera.intersects(e->getRect())) viewEntity.push_back(e);
+		if(camera.intersects(e->getRect())) viewEntities.push_back(e);
 	}
 }
 
@@ -38,7 +38,7 @@ void EntityRenderer::render(sf::RenderWindow& window)
 
 	updateViewableEntities();
 
-	for(Entity* e : viewEntity)
+	for(Entity* e : viewEntities)
 	{
 		Vector2D drawPos = (e->getOrigin() - camera.getOrigin()) * scalar;
 		e->render(window, drawPos);

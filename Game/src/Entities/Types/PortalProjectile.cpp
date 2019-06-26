@@ -1,8 +1,8 @@
 #include "PortalProjectile.h"
 
-PortalProjectile::PortalProjectile(Rect rect, std::string fileName, std::string texturePack, std::vector<Entity*>* colEntity,
-Portal::Type type, Array<std::unique_ptr<Portal>, 2>* portal, bool* resize) :
-DynamicEntity(rect, fileName, texturePack, colEntity, 0, 0), type(type), portal(portal), resize(resize)
+PortalProjectile::PortalProjectile(Rect rect, std::string fileName, std::string texturePack,
+Portal::Type type, std::vector<Entity*>* dynamicEntities, Array<std::unique_ptr<Portal>, 2>* portals, bool* resize) :
+DynamicEntity(rect, fileName, texturePack, dynamicEntities, 0, 0), type(type), portals(portals), resize(resize)
 {
 }
 
@@ -50,9 +50,8 @@ void PortalProjectile::repositionPortal(Collision& collision)
         case Collision::Direction::RIGHT: direction.x = -1; break;
     }
 
-    (*portal)[getType()]->reposition( getRect().pos, direction );
-
-    Rect& portalRect = (*portal)[getType()]->getRect();
+    (*portals)[getType()]->reposition( getRect().pos, direction );
+    Rect& portalRect = (*portals)[getType()]->getRect();
     float dim = std::min(portalRect.size.x, portalRect.size.y);
     portalRect.size = collision.type == Collision::Type::HORIZONTAL ? Vector2D(dim, dim*2) : Vector2D(dim*2, dim);
     *resize = true;

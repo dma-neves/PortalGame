@@ -11,7 +11,8 @@
 class Player : public DynamicEntity
 {
 public:
-	Player(Rect rect, std::string fileName, std::string texturePack, std::vector<Entity*>* colEntity, Array<std::unique_ptr<Portal>, 2>* portal);
+	Player(Rect rect, std::string fileName, std::string texturePack, std::vector<Entity*>* dynamicEntities,
+	Array<std::unique_ptr<Portal>, 2>* portals);
 
 	void moveRight() { velocity.x = speed; }
 	void moveLeft() { velocity.x = -speed; }
@@ -21,7 +22,7 @@ public:
 	void handleCollisionEffect(Vector2D updatedPos, float dt, std::vector<std::pair<Entity*, Collision>>& colliders) override;
 
 private:
-	Portal* getPortal(Portal::Type type) { return (*portal)[type].get(); }
+	Portal* getPortal(Portal::Type type) { return (*portals)[type].get(); }
 
 	void handlePortalCollisionEffect(std::vector<std::pair<Entity*, Collision>>& colliders);
 	void gotoPortal(Portal* originPortal, Portal* destPortal);
@@ -30,7 +31,7 @@ private:
 	float speed = 2;
 	float jumpSpeed = 4.1f;
 
-	Array<std::unique_ptr<Portal>, 2>* portal;
+	Array<std::unique_ptr<Portal>, 2>* portals;
 };
 
 #endif

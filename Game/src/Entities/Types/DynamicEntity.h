@@ -26,7 +26,7 @@ public:
 class DynamicEntity : public Entity
 {
 public:
-	DynamicEntity(Rect rect, std::string fileName, std::string texturePack, std::vector<Entity*>* colEntity, 
+	DynamicEntity(Rect rect, std::string fileName, std::string texturePack, std::vector<Entity*>* dynamicEntities, 
 	float gravity = DEFAULT_GRAVITY, float resistance = DEFAULT_RESISTANCE);
 
 	void update(float dt) override;
@@ -45,7 +45,7 @@ public:
 private:
 	float gravity;
 	float resistance;
-	std::vector<Entity*>* colEntity; //Collidable Entity
+	std::vector<Entity*>* dynamicEntities; //Collidable Entity
 
 protected:
 	bool onGround = false;
