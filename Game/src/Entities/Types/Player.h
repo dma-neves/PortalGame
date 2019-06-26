@@ -5,7 +5,7 @@
 #include <array>
 
 #include "Portal.h"
-#include "DynamicEntity.h"
+#include "DynamicBlock.h"
 #include "Array.h"
 
 class Player : public DynamicEntity
@@ -18,11 +18,13 @@ public:
 	void stop() { velocity.x = 0; }
 	void jump() { if(onGround) velocity.y = -jumpSpeed; onGround = false; }
 
-	void handleCollisionEffect(std::pair<Collision, Direction> collision, std::vector<Entity*>& colliders) override;
-	void gotoPortal(Collision colType, Portal* originPortal, Portal* destPortal);
+	void handleCollisionEffect(Vector2D updatedPos, float dt, std::vector<std::pair<Entity*, Collision>>& colliders) override;
 
 private:
 	Portal* getPortal(Portal::Type type) { return (*portal)[type].get(); }
+
+	void handlePortalCollisionEffect(std::vector<std::pair<Entity*, Collision>>& colliders);
+	void gotoPortal(Portal* originPortal, Portal* destPortal);
 
 private:
 	float speed = 2;

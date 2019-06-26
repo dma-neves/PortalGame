@@ -1,5 +1,6 @@
 #include "DynamicEntity.h"
 #include "StaticBlock.h"
+#include "Player.h"
 
 DynamicEntity::DynamicEntity(Rect rect, std::string fileName, std::string texturePack, std::vector<Entity*>* colEntity, 
 float gravity, float resistance) :
@@ -8,6 +9,7 @@ gravity(gravity),
 resistance(resistance),
 colEntity(colEntity)
 {
+	acceleration = Vector2D(0, gravity);
 }
 
 void DynamicEntity::update(float dt)
@@ -18,60 +20,93 @@ void DynamicEntity::update(float dt)
 	if(!(velocity*dt).null())
 	{
 		Vector2D updatedPos = rect.pos + velocity*dt;
-		handleCollision(updatedPos);
+		handleCollision(updatedPos, dt);
 
 		rect.pos += velocity*dt;
 	}
 }
 
-void DynamicEntity::handleCollision(Vector2D updatedPos)
+void DynamicEntity::handleCollision(Vector2D updatedPos, float dt)
 {
 	Rect updatedRect = rect;
 	updatedRect.pos = updatedPos;
 
-	std::pair<Collision, Direction> collision = {Collision::NON, Direction::UNDEFINED};
-	std::vector<Entity*> colliders;
+	Collision collision = Collision();
+	std::vector<std::pair<Entity*, Collision>> colliders;
 
 	for(Entity* e : *colEntity)
 	{
 		if(e != this && updatedRect.intersects(e->getRect()))
 		{
-			colliders.push_back(e);
 			collision = getCollision(rect, e->getRect(), updatedPos);
+			colliders.push_back( {e, collision} );
 
-			if(dynamic_cast<StaticBlock*>(e) != nullptr)
+			if(dynamic_cast<StaticBlock*>(e) != nullptr || dynamic_cast<Player*>(e) != nullptr)
 			{
-				if(collision.first == HORIZONTAL)    { velocity.x = 0; }
-				else if(collision.first == VERTICAL) { velocity.y = 0; }
+				if(collision.type == Collision::Type::HORIZONTAL)    { velocity.x = 0; }
+				else if(collision.type == Collision::Type::VERTICAL) { velocity.y = 0; }
 			}
 
-			if(collision.first == VERTICAL && rect.pos.y < e->getRect().pos.y) onGround = true;
+			if(collision.type == Collision::Type::VERTICAL && rect.pos.y < e->getRect().pos.y) onGround = true;
 		}
+		if(velocity.y > 0) onGround = false;
 	}
-	if(velocity.y > 0) onGround = false;
-
-	if(collision.first != Collision::NON) handleCollisionEffect(collision, colliders);
+	handleCollisionEffect(updatedPos, dt, colliders);
 }
 
-std::pair<DynamicEntity::Collision, DynamicEntity::Direction> DynamicEntity::getCollision(Rect& dRect, Rect& cRect, Vector2D& updatedPos)
+Collision DynamicEntity::getCollision(Rect& dRect, Rect& cRect, Vector2D& updatedPos)
 {
-	Collision colType = Collision::NON;
-	Direction colDir = Direction::UNDEFINED;
+	Collision collision = Collision();
 
+	bool vertical = false;
 	Rect vUpdatedRect = dRect;
 	vUpdatedRect.pos.y = updatedPos.y;
 	if(vUpdatedRect.intersects(cRect))
 	{
-		colType = VERTICAL;
-		colDir = updatedPos.y > dRect.pos.y ? DOWN : UP;
+		vertical = true;
+		collision.type = Collision::Type::VERTICAL;
+		collision.direction = updatedPos.y > dRect.pos.y ? Collision::Direction::DOWN : Collision::Direction::UP;
 	}
 
 	vUpdatedRect.pos = Vector2D(updatedPos.x, dRect.pos.y);
 	if(vUpdatedRect.intersects(cRect))
 	{
-		colType = HORIZONTAL;
-		colDir = updatedPos.x > dRect.pos.x ? RIGHT : LEFT;
+		if(vertical) collision.diagonal = true;
+		collision.type = Collision::Type::HORIZONTAL;
+		collision.direction = updatedPos.x > dRect.pos.x ? Collision::Direction::RIGHT : Collision::Direction::LEFT;
 	}
 
-	return std::pair<Collision, Direction> (colType, colDir);
+	return collision;
+}
+
+void DynamicEntity::handleCollisionEffect(Vector2D updatedPos, float dt, std::vector<std::pair<Entity*, Collision>>& colliders)
+{
+	Rect updatedRect = rect;
+	updatedRect.pos = updatedPos;
+
+	for(std::pair<Entity*, Collision>& c : colliders)
+	{
+		if(dynamic_cast<DynamicBlock*>(c.first) != nullptr)
+		{
+			DynamicEntity* dEntity = dynamic_cast<DynamicEntity*>(c.first);
+
+			if(c.second.diagonal) dEntity->velocity = velocity;
+			else c.second.type == Collision::Type::HORIZONTAL ? dEntity->velocity.x = velocity.x : dEntity->velocity.y = velocity.y;
+			dEntity->handleCollision(dEntity->getRect().pos + dEntity->velocity*dt, dt);
+			dEntity->getRect().pos += dEntity->velocity*dt;
+
+			if(updatedRect.intersects(dEntity->getRect()))
+			{
+				if(c.second.diagonal) velocity = 0;
+
+				else if(c.second.type == Collision::Type::HORIZONTAL) velocity.x = 0;
+
+				else velocity.y = 0;
+
+				if(c.second.type == Collision::Type::VERTICAL && rect.pos.y < dEntity->getRect().pos.y) onGround = true;
+			}
+
+			if(velocity.y > 0) onGround = false;
+		}
+	}
 }

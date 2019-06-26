@@ -79,7 +79,7 @@ void Vector2D::operator=(float num)
         this->x = 0;
         this->y = 0;
     }
-    else std::cout << "Error: Invalid Vector2D operation" << std::endl;
+    else std::cout << "Error: Invalid Vector2D operation: Vector2D = " << num << std::endl;
 }
 
 Vector2D& Vector2D::setMagnitude(float mag)

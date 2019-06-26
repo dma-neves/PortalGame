@@ -20,39 +20,41 @@ void PortalProjectile::shoot(Vector2D direction)
     velocity.setMagnitude(SPEED);
 }
 
-void PortalProjectile::handleCollisionEffect(std::pair<Collision, Direction> collision, std::vector<Entity*>& colliders)
+void PortalProjectile::handleCollisionEffect(Vector2D updatedPos, float dt, std::vector<std::pair<Entity*, Collision>>& colliders)
 {
-    for(Entity* e : colliders)
+    Collision collision;
+    for(std::pair<Entity*, Collision>& c : colliders)
     {
-        if(dynamic_cast<Portal*>(e) != nullptr)
+        if(dynamic_cast<Portal*>(c.first) != nullptr)
         {
             this->kill();
             return;
         }
+        collision = c.second;
     }
 
-    if(collision.first != DynamicEntity::Collision::NON) repositionPortal(collision);
+    if(collision.type != Collision::Type::NON) repositionPortal(collision);
 }
 
-void PortalProjectile::repositionPortal(std::pair<Collision, Direction>& collision)
+void PortalProjectile::repositionPortal(Collision& collision)
 {
     Vector2D direction;
-    switch(collision.second)
+    switch(collision.direction)
     {
-        case DynamicEntity::UP: direction.y = 1; break;
+        case Collision::Direction::UP: direction.y = 1; break;
 
-        case DynamicEntity::DOWN: direction.y = -1; break;
+        case Collision::Direction::DOWN: direction.y = -1; break;
 
-        case DynamicEntity::LEFT: direction.x = 1; break;
+        case Collision::Direction::LEFT: direction.x = 1; break;
 
-        case DynamicEntity::RIGHT: direction.x = -1; break;
+        case Collision::Direction::RIGHT: direction.x = -1; break;
     }
 
     (*portal)[getType()]->reposition( getRect().pos, direction );
 
     Rect& portalRect = (*portal)[getType()]->getRect();
     float dim = std::min(portalRect.size.x, portalRect.size.y);
-    portalRect.size = collision.first == DynamicEntity::Collision::HORIZONTAL ? Vector2D(dim, dim*2) : Vector2D(dim*2, dim);
+    portalRect.size = collision.type == Collision::Type::HORIZONTAL ? Vector2D(dim, dim*2) : Vector2D(dim*2, dim);
     *resize = true;
 
     kill();

@@ -5,22 +5,34 @@ DynamicEntity(rect, fileName, texturePack, colEntity), portal(portal)
 {
 }
 
-void Player::handleCollisionEffect(std::pair<Collision, Direction> collision, std::vector<Entity*>& colliders)
+void Player::handleCollisionEffect(Vector2D updatedPos, float dt, std::vector<std::pair<Entity*, Collision>>& colliders)
+{
+    handlePortalCollisionEffect(colliders);
+    DynamicEntity::handleCollisionEffect(updatedPos, dt, colliders);
+}
+
+void Player::handlePortalCollisionEffect(std::vector<std::pair<Entity*, Collision>>& colliders)
 {
     Portal* portal = nullptr;
-    for(std::vector<Entity*>::iterator ei = colliders.begin(); ei != colliders.end() && portal == nullptr; ei++)
+    Collision collision;
+    for(std::pair<Entity*, Collision>& c : colliders)
     {
-        portal = dynamic_cast<Portal*>(*ei);
+        portal = dynamic_cast<Portal*>(c.first);
+        if(portal != nullptr) 
+        {
+            collision = c.second;
+            break;
+        }
     }
 
     if(portal != nullptr && portal->initialized())
     {
         Portal* destPortal = portal->getType() == Portal::Type::BLUE ? getPortal(Portal::Type::RED) : getPortal(Portal::Type::BLUE);
-        if(destPortal->initialized()) gotoPortal(collision.first, portal, destPortal);
+        if(destPortal->initialized()) gotoPortal(portal, destPortal);
     }
 }
 
-void Player::gotoPortal(Collision colType, Portal* originPortal, Portal* destPortal)
+void Player::gotoPortal(Portal* originPortal, Portal* destPortal)
 {
     this->getRect().pos = destPortal->getRect().pos;
     this->getRect().pos += destPortal->getDirection().setMagnitude( 1.5 * std::min(destPortal->getRect().size.x, destPortal->getRect().size.y) );

@@ -22,8 +22,8 @@ public:
     
 private:
 
-    void handleCollisionEffect(std::pair<Collision, Direction> collision, std::vector<Entity*>& colliders) override;
-    void repositionPortal(std::pair<Collision, Direction>& collision);
+    void handleCollisionEffect(Vector2D updatedPos, float dt, std::vector<std::pair<Entity*, Collision>>& colliders) override;
+    void repositionPortal(Collision& collision);
 
 private:
     Portal::Type type;
