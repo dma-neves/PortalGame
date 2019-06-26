@@ -45,6 +45,11 @@ void LevelLoader::loadLevel(std::string fileName)
 					entityMng->addDynamicBlock(new DynamicBlock(Rect(Vector2D(x, y), Vector2D(1,1)), 
 					"dynamicBlock.png", texturePack, &entityMng->getColEntities(), &entityMng->getPortals()));
 					break;
+
+				case 'F':
+					entityMng->addStaticBlock(new StaticBlock(Rect(Vector2D(x-0.5f, y-0.5f), Vector2D(2,2)), 
+					"finishBlock.png", texturePack, true));
+					break;
 				}
 			}
 		}
