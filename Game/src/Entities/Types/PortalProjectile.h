@@ -13,7 +13,7 @@ class PortalProjectile : public DynamicEntity
 public:
 
 	PortalProjectile(Rect rect, std::string fileName, std::string texturePack, Portal::Type type,
-    std::vector<Entity*>* dynamicEntities, Array<std::unique_ptr<Portal>, 2>* portals, bool* resize);
+    std::vector<Entity*>* colEntities, Array<std::unique_ptr<Portal>, 2>* portals, bool* resize);
 
     void update(float dt) override;
 

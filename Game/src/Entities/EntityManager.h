@@ -28,7 +28,7 @@ public:
 
 	Player& getPlayer() { return *player.get(); }
 	std::vector<Entity*>& getEntities() { return entities; }
-	std::vector<Entity*>& getDynamicEntities() { return dynamicEntities; }
+	std::vector<Entity*>& getColEntities() { return colEntities; }
 	Portal& getPortal(Portal::Type type) { return *portals[type].get(); }
 	Array<std::unique_ptr<Portal>, 2>& getPortals() { return portals; }
 	PortalProjectile& getPortalProjectile(Portal::Type type) { return *portalProj[type].get(); }
@@ -40,7 +40,7 @@ private:
 
 private:
 	std::vector<Entity*> entities;
-	std::vector<Entity*> dynamicEntities; //Colliadable entity
+	std::vector<Entity*> colEntities; //Colliadable entity
 
 	std::vector<std::unique_ptr<StaticBlock>> staticBlocks;
 	std::vector<std::unique_ptr<DynamicBlock>> dynamicBlocks;

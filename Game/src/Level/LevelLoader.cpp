@@ -39,11 +39,11 @@ void LevelLoader::loadLevel(std::string fileName)
 
 				case 'P':
 					entityMng->addPlayer(new Player(Rect(Vector2D(x,y), Vector2D(1,1.8f)), 
-					"player.png", texturePack, &entityMng->getDynamicEntities(), &entityMng->getPortals()));
+					"player.png", texturePack, &entityMng->getColEntities(), &entityMng->getPortals()));
 					break;
 				case 'O':
 					entityMng->addDynamicBlock(new DynamicBlock(Rect(Vector2D(x, y), Vector2D(1,1)), 
-					"dynamicBlock.png", texturePack, &entityMng->getDynamicEntities()));
+					"dynamicBlock.png", texturePack, &entityMng->getColEntities(), &entityMng->getPortals()));
 					break;
 				}
 			}

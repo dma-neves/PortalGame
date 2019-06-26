@@ -7,7 +7,7 @@ EntityManager::EntityManager(bool* resize) : resize(resize)
 void EntityManager::reset()
 {
 	entities.clear();
-	dynamicEntities.clear();
+	colEntities.clear();
 	staticBlocks.clear();
 	dynamicBlocks.clear();
 }
@@ -23,7 +23,7 @@ Player& EntityManager::addPlayer(Player* player)
 {
 	this->player.reset(player);
 	this->entities.push_back(player);
-	this->dynamicEntities.push_back(player);
+	this->colEntities.push_back(player);
 	return *player;
 }
 
@@ -31,7 +31,7 @@ Portal& EntityManager::addPortal(Portal* portal)
 {
 	this->portals[portal->getType()].reset(portal);
 	this->entities.push_back(portal);
-	this->dynamicEntities.push_back(portal);
+	this->colEntities.push_back(portal);
 	return *portal;
 }
 
@@ -41,7 +41,7 @@ StaticBlock& EntityManager::addStaticBlock(StaticBlock* staticBlocks)
 	this->staticBlocks.push_back(std::move(uptr));
 
 	this->entities.push_back(staticBlocks);
-	this->dynamicEntities.push_back(staticBlocks);
+	this->colEntities.push_back(staticBlocks);
 	return *staticBlocks;
 }
 
@@ -51,7 +51,7 @@ DynamicBlock& EntityManager::addDynamicBlock(DynamicBlock* dynamicBlocks)
 	this->dynamicBlocks.push_back(std::move(uptr));
 
 	this->entities.push_back(dynamicBlocks);
-	this->dynamicEntities.push_back(dynamicBlocks);
+	this->colEntities.push_back(dynamicBlocks);
 	return *dynamicBlocks;
 }
 
@@ -59,7 +59,7 @@ PortalProjectile& EntityManager::addPortalProjectile(PortalProjectile* portalPro
 {
 	this->portalProj[portalProjectile->getType()].reset(portalProjectile);
 	this->entities.push_back(portalProjectile);
-	this->dynamicEntities.push_back(portalProjectile);
+	this->colEntities.push_back(portalProjectile);
 	return *portalProjectile;
 }
 
@@ -75,9 +75,9 @@ void EntityManager::eraseDeadEntities()
 		if(!dynamicBlocks[i]->isAlive()) dynamicBlocks.erase(dynamicBlocks.begin() + i);
 	}
 
-	for(int i = 0; i < dynamicEntities.size(); i++)
+	for(int i = 0; i < colEntities.size(); i++)
 	{
-		if(!dynamicEntities[i]->isAlive()) dynamicEntities.erase(dynamicEntities.begin() + i);
+		if(!colEntities[i]->isAlive()) colEntities.erase(colEntities.begin() + i);
 	}
 
 	for(int i = 0; i < entities.size(); i++)

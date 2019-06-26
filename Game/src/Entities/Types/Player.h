@@ -5,13 +5,13 @@
 #include <array>
 
 #include "Portal.h"
-#include "DynamicBlock.h"
+#include "DisplaceableEntity.h"
 #include "Array.h"
 
-class Player : public DynamicEntity
+class Player : public DisplaceableEntity
 {
 public:
-	Player(Rect rect, std::string fileName, std::string texturePack, std::vector<Entity*>* dynamicEntities,
+	Player(Rect rect, std::string fileName, std::string texturePack, std::vector<Entity*>* colEntities,
 	Array<std::unique_ptr<Portal>, 2>* portals);
 
 	void moveRight() { velocity.x = speed; }
@@ -19,19 +19,9 @@ public:
 	void stop() { velocity.x = 0; }
 	void jump() { if(onGround) velocity.y = -jumpSpeed; onGround = false; }
 
-	void handleCollisionEffect(Vector2D updatedPos, float dt, std::vector<std::pair<Entity*, Collision>>& colliders) override;
-
-private:
-	Portal* getPortal(Portal::Type type) { return (*portals)[type].get(); }
-
-	void handlePortalCollisionEffect(std::vector<std::pair<Entity*, Collision>>& colliders);
-	void gotoPortal(Portal* originPortal, Portal* destPortal);
-
 private:
 	float speed = 2;
 	float jumpSpeed = 4.1f;
-
-	Array<std::unique_ptr<Portal>, 2>* portals;
 };
 
 #endif

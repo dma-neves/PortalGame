@@ -1,13 +1,14 @@
 #include "DynamicEntity.h"
 #include "StaticBlock.h"
 #include "Player.h"
+#include "DynamicBlock.h"
 
-DynamicEntity::DynamicEntity(Rect rect, std::string fileName, std::string texturePack, std::vector<Entity*>* dynamicEntities, 
+DynamicEntity::DynamicEntity(Rect rect, std::string fileName, std::string texturePack, std::vector<Entity*>* colEntities, 
 float gravity, float resistance) :
 Entity(rect, fileName, texturePack), 
 gravity(gravity),
 resistance(resistance),
-dynamicEntities(dynamicEntities)
+colEntities(colEntities)
 {
 	acceleration = Vector2D(0, gravity);
 }
@@ -33,7 +34,7 @@ void DynamicEntity::handleCollision(Vector2D updatedPos, float dt)
 	Collision collision = Collision();
 	std::vector<std::pair<Entity*, Collision>> colliders;
 
-	for(Entity* e : *dynamicEntities)
+	for(Entity* e : *colEntities)
 	{
 		if(e != this && updatedRect.intersects(e->getRect()))
 		{
