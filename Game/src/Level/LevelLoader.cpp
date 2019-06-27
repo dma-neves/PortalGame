@@ -58,6 +58,26 @@ void LevelLoader::loadLevel(std::string fileName)
 				}
 			}
 		}
+
+		int numGates;
+		levelFile >> numGates;
+		for(int i = 0; i < numGates; i++)
+		{
+			Vector2D gatePos;
+			Vector2D leverPos;
+
+			levelFile >> gatePos.x;
+			levelFile >> gatePos.y;
+			gatePos.y -= 0.5f;
+			levelFile >> leverPos.x;
+			levelFile >> leverPos.y;
+
+			StaticBlock& sb = entityMng->addStaticBlock(new Gate(Rect(gatePos, Vector2D(1,2)), "gate.png", texturePack));
+			Gate* gate = static_cast<Gate*>(&sb);
+			entityMng->addStaticBlock(new Lever(Rect(leverPos, Vector2D(1,1)), "lever.png", texturePack, gate, 
+			&entityMng->getDisplaceableEntities()));
+		}
+
 		levelFile.close();
 	}
 }

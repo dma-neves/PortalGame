@@ -3,6 +3,7 @@
 
 #include "DynamicEntity.h"
 #include "Portal.h"
+#include "StaticBlock.h"
 #include "Array.h"
 
 #define SPEED 4

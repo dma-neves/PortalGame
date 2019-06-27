@@ -25,7 +25,7 @@ void PortalProjectile::handleCollisionEffect(Vector2D updatedPos, float dt, std:
     Collision collision;
     for(std::pair<Entity*, Collision>& c : colliders)
     {
-        if(dynamic_cast<Portal*>(c.first) != nullptr)
+        if(dynamic_cast<StaticBlock*>(c.first) == nullptr)
         {
             this->kill();
             return;
