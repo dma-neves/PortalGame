@@ -12,7 +12,7 @@ class Player : public DisplaceableEntity
 {
 public:
 	Player(Rect rect, std::string fileName, std::string texturePack, std::vector<Entity*>* colEntities,
-	Array<std::unique_ptr<Portal>, 2>* portals);
+	Array<Portal*, 2>* portals);
 
 	void moveRight() { velocity.x = speed; }
 	void moveLeft() { velocity.x = -speed; }

@@ -2,7 +2,7 @@
 #define TEXTUREMANAGER_H
 
 #include <vector>
-#include <string>
+#include <map>
 #include <SFML/Graphics.hpp>
 
 class TextureManager
@@ -11,8 +11,7 @@ public:
     static sf::Texture loadTexture(std::string fileDir);
 
 private:
-    static std::vector<sf::Texture>texture;
-    static std::vector<std::string>fileDir;
+    static std::map<std::string ,sf::Texture> textures;
 };
 
 #endif

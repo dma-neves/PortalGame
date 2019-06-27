@@ -66,11 +66,9 @@ void LevelLoader::loadLevel(std::string fileName)
 			Vector2D gatePos;
 			Vector2D leverPos;
 
-			levelFile >> gatePos.x;
-			levelFile >> gatePos.y;
+			levelFile >> gatePos.x >> gatePos.y;
 			gatePos.y -= 0.5f;
-			levelFile >> leverPos.x;
-			levelFile >> leverPos.y;
+			levelFile >> leverPos.x >> leverPos.y;
 
 			StaticBlock& sb = entityMng->addStaticBlock(new Gate(Rect(gatePos, Vector2D(1,2)), "gate.png", texturePack));
 			Gate* gate = static_cast<Gate*>(&sb);

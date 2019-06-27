@@ -15,7 +15,7 @@
 class Game
 {
 public:
-	Game(Vector2D wSize, std::string title);
+	Game(Vector2D wSize, std::string title, std::string levelFile);
 
 	void run();
 	void handleEvents(float dt);

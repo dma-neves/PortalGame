@@ -24,15 +24,15 @@ Vector2D::Vector2D(sf::Vector2i vec)
     y = vec.y;
 }
 
-Vector2D Vector2D::operator+(Vector2D addVector)
+Vector2D Vector2D::operator+(Vector2D vec)
 {
-    Vector2D newVector(this->x + addVector.x, this->y + addVector.y);
+    Vector2D newVector(this->x + vec.x, this->y + vec.y);
     return newVector;
 }
 
-Vector2D Vector2D::operator-(Vector2D subVector)
+Vector2D Vector2D::operator-(Vector2D vec)
 {
-    Vector2D newVector(this->x - subVector.x, this->y - subVector.y);
+    Vector2D newVector(this->x - vec.x, this->y - vec.y);
     return newVector;
 }
 
@@ -48,16 +48,16 @@ Vector2D Vector2D::operator/(float scaler)
     return newVector;
 }
 
-void Vector2D::operator+=(Vector2D addVector)
+void Vector2D::operator+=(Vector2D vec)
 {
-    this->x += addVector.x;
-    this->y += addVector.y;
+    this->x += vec.x;
+    this->y += vec.y;
 }
 
-void Vector2D::operator-=(Vector2D subVector)
+void Vector2D::operator-=(Vector2D vec)
 {
-    this->x -= subVector.x;
-    this->y -= subVector.y;
+    this->x -= vec.x;
+    this->y -= vec.y;
 }
 
 void Vector2D::operator*=(float scaler)

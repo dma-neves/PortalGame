@@ -15,13 +15,13 @@ public:
 
     float x, y;
 
-    Vector2D operator+(Vector2D addVector);
-    Vector2D operator-(Vector2D subVector);
+    Vector2D operator+(Vector2D vec);
+    Vector2D operator-(Vector2D vec);
     Vector2D operator*(float scaler);
     Vector2D operator/(float scaler);
 
-    void operator+=(Vector2D addVector);
-    void operator-=(Vector2D subVector);
+    void operator+=(Vector2D vec);
+    void operator-=(Vector2D vec);
     void operator*=(float scaler);
     void operator/=(float scaler);
     void operator=(float num);

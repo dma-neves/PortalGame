@@ -4,12 +4,18 @@ EntityManager::EntityManager(bool* resize) : resize(resize)
 {
 }
 
+void EntityManager::addEntity(Entity* entity)
+{
+	std::unique_ptr<Entity> uptr(entity);
+	entities_uptr.push_back(std::move(uptr));
+	entities.push_back(entity);
+}
+
 void EntityManager::reset()
 {
 	entities.clear();
 	colEntities.clear();
-	staticBlocks.clear();
-	dynamicBlocks.clear();
+	displaceableEntities.clear();
 }
 
 void EntityManager::update(float dt)
@@ -21,70 +27,69 @@ void EntityManager::update(float dt)
 
 Player& EntityManager::addPlayer(Player* player)
 {
-	this->player.reset(player);
-	this->entities.push_back(player);
-	this->colEntities.push_back(player);
-	this->displaceableEntities.push_back(player);
+	addEntity(player);
+
+	this->player = player;
+	colEntities.push_back(player);
+	displaceableEntities.push_back(player);
 	return *player;
 }
 
 Portal& EntityManager::addPortal(Portal* portal)
 {
-	this->portals[portal->getType()].reset(portal);
-	this->entities.push_back(portal);
-	this->colEntities.push_back(portal);
+	addEntity(portal);
+
+	portals[portal->getType()] = portal;
+	colEntities.push_back(portal);
 	return *portal;
 }
 
 StaticBlock& EntityManager::addStaticBlock(StaticBlock* staticBlock)
 {
-	std::unique_ptr<StaticBlock> uptr(staticBlock);
-	this->staticBlocks.push_back(std::move(uptr));
+	addEntity(staticBlock);
 
-	this->entities.push_back(staticBlock);
-	this->colEntities.push_back(staticBlock);
+	colEntities.push_back(staticBlock);
 	return *staticBlock;
 }
 
 DynamicBlock& EntityManager::addDynamicBlock(DynamicBlock* dynamicBlock)
 {
-	std::unique_ptr<DynamicBlock> uptr(dynamicBlock);
-	this->dynamicBlocks.push_back(std::move(uptr));
+	addEntity(dynamicBlock);
 
-	this->entities.push_back(dynamicBlock);
-	this->colEntities.push_back(dynamicBlock);
-	this->displaceableEntities.push_back(dynamicBlock);
+	colEntities.push_back(dynamicBlock);
+	displaceableEntities.push_back(dynamicBlock);
 	return *dynamicBlock;
 }
 
 PortalProjectile& EntityManager::addPortalProjectile(PortalProjectile* portalProjectile)
 {
-	this->portalProj[portalProjectile->getType()].reset(portalProjectile);
-	this->entities.push_back(portalProjectile);
-	this->colEntities.push_back(portalProjectile);
+	addEntity(portalProjectile);
+
+	portalProj[portalProjectile->getType()] =portalProjectile;
+	colEntities.push_back(portalProjectile);
 	return *portalProjectile;
 }
 
 void EntityManager::eraseDeadEntities()
 {
-	for(int i = 0; i < staticBlocks.size(); i++)
+	for(int i = 0; i < entities_uptr.size(); i++)
 	{
-		if(!staticBlocks[i]->isAlive()) staticBlocks.erase(staticBlocks.begin() + i);
-	}
-
-	for(int i = 0; i < dynamicBlocks.size(); i++)
-	{
-		if(!dynamicBlocks[i]->isAlive()) dynamicBlocks.erase(dynamicBlocks.begin() + i);
-	}
-
-	for(int i = 0; i < colEntities.size(); i++)
-	{
-		if(!colEntities[i]->isAlive()) colEntities.erase(colEntities.begin() + i);
+		if(!entities_uptr[i].get()->isAlive()) entities_uptr.erase(entities_uptr.begin() + i);
 	}
 
 	for(int i = 0; i < entities.size(); i++)
 	{
 		if(!entities[i]->isAlive()) entities.erase(entities.begin() + i);
+	}
+
+	for(int i = 0; i < displaceableEntities.size(); i++)
+	{
+		if(!displaceableEntities[i]->isAlive()) displaceableEntities.erase(displaceableEntities.begin() + i);
+	}
+
+	for(int i = 0; i < colEntities.size(); i++)
+	{
+		if(!colEntities[i]->isAlive()) colEntities.erase(colEntities.begin() + i);
 	}
 }
 

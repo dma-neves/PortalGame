@@ -18,7 +18,7 @@
   3. *Running the game*
       - Once in the directory where you cloned or downloaded the repository, the Exectuable can be found in the 
       following directory PortalGame/Game/bin
-      - To run the game simply execute the command `./PortalGame` using the terminal
+      - To run the game simply execute the command `./PortalGame.out` using the terminal
       
  **Controls:**
    - W, A, S, D for movement

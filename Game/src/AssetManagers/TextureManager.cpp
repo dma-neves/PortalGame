@@ -2,21 +2,17 @@
 
 #include <iostream>
 
-std::vector<sf::Texture>TextureManager::texture;
-std::vector<std::string>TextureManager::fileDir;
+std::map<std::string ,sf::Texture> TextureManager::textures;
 
 sf::Texture TextureManager::loadTexture(std::string newFileDir)
 {
-    for(unsigned i = 0; i < fileDir.size(); i++)
+    std::map<std::string ,sf::Texture>::iterator it = textures.find(newFileDir);
+    if(it == textures.end())
     {
-        if(fileDir[i] == newFileDir) return texture[i];
+	    sf::Texture newTexture;
+		newTexture.loadFromFile(newFileDir);
+		textures.insert(std::pair<std::string, sf::Texture> (newFileDir, newTexture) );
+		return newTexture;
     }
-
-    sf::Texture newTexture;
-    newTexture.loadFromFile(newFileDir);
-
-    fileDir.push_back(newFileDir);
-    texture.push_back(newTexture);
-
-    return newTexture;
+    else return it->second;
 }
