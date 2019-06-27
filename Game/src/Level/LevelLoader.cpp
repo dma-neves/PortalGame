@@ -50,6 +50,11 @@ void LevelLoader::loadLevel(std::string fileName)
 					entityMng->addStaticBlock(new StaticBlock(Rect(Vector2D(x-0.5f, y-0.5f), Vector2D(2,2)), 
 					"finishBlock.png", texturePack, true));
 					break;
+
+				case '+':
+					entityMng->addStaticBlock(new StaticBlock(Rect(Vector2D(x, y-0.5f), Vector2D(1,2)), 
+					"gate.png", texturePack));
+					break;
 				}
 			}
 		}

@@ -10,6 +10,10 @@ levelLoader(&entityMng)
 
 	entityMng.addPortal(new Portal(Rect(Vector2D(), Vector2D(1, 1)), "bluePortal.png", levelLoader.getPack(), Portal::BLUE));
 	entityMng.addPortal(new Portal(Rect(Vector2D(), Vector2D(1, 1)), "redPortal.png", levelLoader.getPack(), Portal::RED));
+
+	StaticBlock& sb = entityMng.addStaticBlock(new Gate(Rect(Vector2D(18, 14.5f), Vector2D(1,2)), "gate.png", levelLoader.getPack()));
+	Gate* gate = static_cast<Gate*>(&sb);
+	entityMng.addStaticBlock(new Lever(Rect(Vector2D(27, 22), Vector2D(1,1)), "lever.png", levelLoader.getPack(), gate, &entityMng.getDisplaceableEntities()));
 }
 
 void Game::run()

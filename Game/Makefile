@@ -6,6 +6,7 @@ CPPC=g++ -std=c++11 -g
 
 OBJECT_FILES=obj/main.o obj/Game.o obj/Vector2D.o obj/Rect.o obj/Entity.o obj/TextureManager.o obj/EntityRenderer.o
 OBJECT_FILES+=obj/Player.o obj/LevelLoader.o obj/DynamicEntity.o obj/EntityManager.o obj/PortalProjectile.o obj/DisplaceableEntity.o
+OBJECT_FILES+=obj/Lever.o
 
 PortalGame: $(OBJECT_FILES)
 	$(CPPC) $(OBJECT_FILES) -o bin/PortalGame $(LIBS)
@@ -48,6 +49,9 @@ obj/PortalProjectile.o: src/Entities/Types/PortalProjectile.cpp src/Entities/Typ
 
 obj/DisplaceableEntity.o: src/Entities/Types/DisplaceableEntity.cpp src/Entities/Types/DisplaceableEntity.h
 	$(CPPC) -c src/Entities/Types/DisplaceableEntity.cpp -I $(INC_DIRECOTRY) -o obj/DisplaceableEntity.o
+
+obj/Lever.o: src/Entities/Types/Lever.cpp src/Entities/Types/Lever.h
+	$(CPPC) -c src/Entities/Types/Lever.cpp -I $(INC_DIRECOTRY) -o obj/Lever.o
 
 clean:
 	rm obj/*.o bin/PortalGame

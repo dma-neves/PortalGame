@@ -24,6 +24,7 @@ Player& EntityManager::addPlayer(Player* player)
 	this->player.reset(player);
 	this->entities.push_back(player);
 	this->colEntities.push_back(player);
+	this->displaceableEntities.push_back(player);
 	return *player;
 }
 
@@ -35,24 +36,25 @@ Portal& EntityManager::addPortal(Portal* portal)
 	return *portal;
 }
 
-StaticBlock& EntityManager::addStaticBlock(StaticBlock* staticBlocks)
+StaticBlock& EntityManager::addStaticBlock(StaticBlock* staticBlock)
 {
-	std::unique_ptr<StaticBlock> uptr(staticBlocks);
+	std::unique_ptr<StaticBlock> uptr(staticBlock);
 	this->staticBlocks.push_back(std::move(uptr));
 
-	this->entities.push_back(staticBlocks);
-	this->colEntities.push_back(staticBlocks);
-	return *staticBlocks;
+	this->entities.push_back(staticBlock);
+	this->colEntities.push_back(staticBlock);
+	return *staticBlock;
 }
 
-DynamicBlock& EntityManager::addDynamicBlock(DynamicBlock* dynamicBlocks)
+DynamicBlock& EntityManager::addDynamicBlock(DynamicBlock* dynamicBlock)
 {
-	std::unique_ptr<DynamicBlock> uptr(dynamicBlocks);
+	std::unique_ptr<DynamicBlock> uptr(dynamicBlock);
 	this->dynamicBlocks.push_back(std::move(uptr));
 
-	this->entities.push_back(dynamicBlocks);
-	this->colEntities.push_back(dynamicBlocks);
-	return *dynamicBlocks;
+	this->entities.push_back(dynamicBlock);
+	this->colEntities.push_back(dynamicBlock);
+	this->displaceableEntities.push_back(dynamicBlock);
+	return *dynamicBlock;
 }
 
 PortalProjectile& EntityManager::addPortalProjectile(PortalProjectile* portalProjectile)

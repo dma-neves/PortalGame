@@ -32,6 +32,7 @@ public:
 	Portal& getPortal(Portal::Type type) { return *portals[type].get(); }
 	Array<std::unique_ptr<Portal>, 2>& getPortals() { return portals; }
 	PortalProjectile& getPortalProjectile(Portal::Type type) { return *portalProj[type].get(); }
+	std::vector<DisplaceableEntity*>& getDisplaceableEntities() { return displaceableEntities; }
 
 	bool hasPortalProjectile(Portal::Type type);
 
@@ -41,6 +42,7 @@ private:
 private:
 	std::vector<Entity*> entities;
 	std::vector<Entity*> colEntities; //Colliadable entity
+	std::vector<DisplaceableEntity*> displaceableEntities;
 
 	std::vector<std::unique_ptr<StaticBlock>> staticBlocks;
 	std::vector<std::unique_ptr<DynamicBlock>> dynamicBlocks;

@@ -36,18 +36,22 @@ void DynamicEntity::handleCollision(Vector2D updatedPos, float dt)
 
 	for(Entity* e : *colEntities)
 	{
-		if(e != this && updatedRect.intersects(e->getRect()))
+		if( e != this && updatedRect.intersects(e->getRect()))
 		{
-			collision = getCollision(rect, e->getRect(), updatedPos);
-			colliders.push_back( {e, collision} );
-
-			if(dynamic_cast<StaticBlock*>(e) != nullptr || dynamic_cast<Player*>(e) != nullptr)
+			Gate* gate = dynamic_cast<Gate*>(e);
+			if(gate == nullptr || gate->closed)
 			{
-				if(collision.type == Collision::Type::HORIZONTAL)    { velocity.x = 0; }
-				else if(collision.type == Collision::Type::VERTICAL) { velocity.y = 0; }
-			}
+				collision = getCollision(rect, e->getRect(), updatedPos);
+				colliders.push_back( {e, collision} );
 
-			if(collision.type == Collision::Type::VERTICAL && rect.pos.y < e->getRect().pos.y) onGround = true;
+				if(dynamic_cast<StaticBlock*>(e) != nullptr || dynamic_cast<Player*>(e) != nullptr)
+				{
+					if(collision.type == Collision::Type::HORIZONTAL)    { velocity.x = 0; }
+					else if(collision.type == Collision::Type::VERTICAL) { velocity.y = 0; }
+				}
+
+				if(collision.type == Collision::Type::VERTICAL && rect.pos.y < e->getRect().pos.y) onGround = true;
+			}
 		}
 		if(velocity.y > 0) onGround = false;
 	}

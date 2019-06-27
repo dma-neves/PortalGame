@@ -5,6 +5,7 @@
 #include <array>
 
 #include "Portal.h"
+#include "Lever.h"
 #include "DynamicEntity.h"
 #include "Array.h"
 
