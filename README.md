@@ -2,8 +2,8 @@
 
 **Description:**
   - A prototype / framework for a simple 2D "Portal game" clone made mainly to test out some simple physics 
-  and entity management mechanisms
-  - Also contains a basic Level editor
+  and entity management mechanisms (Made in c++ using the SFML library)
+  - Also contains a basic Level editor (Made in python)
   
 **Requirements:**
   1. Linux operating system
