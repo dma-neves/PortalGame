@@ -8,7 +8,7 @@
 **Requirements:**
   1. Linux operating system
   2. GCC compiler
-  3. Python 3
+  3. Python interpreter
 
 **Installing and running the game (Linux):**
   1. *Installing SFML*
