@@ -23,3 +23,4 @@
  **Game controls:**
    - W, A, S, D for movement
    - Right and Left mouse buttons for shooting portals
+   - Escape to exit the game
