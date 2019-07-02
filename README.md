@@ -18,8 +18,7 @@
   2. *Running the launcher*
       - Go to the directory where you cloned or downloaded the repository
       - To run the launcher exectue the command `./launcher` using the terminal
-      - From the launcher you can install the necessary libraries, build the game, run the game and run the 
-      level editor
+      - From the launcher you can build the game, run the game and run the level editor
       
  **Game controls:**
    - W, A, S, D for movement
