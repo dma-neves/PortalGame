@@ -19,7 +19,7 @@ int main()
         std::cout << std::endl << "1) Build program" << std::endl;
         std::cout << "2) Run game" << std::endl;
         std::cout << "3) Run editor" << std::endl;
-        std::cout << "4) exit" << std::endl << std::endl;
+        std::cout << "4) exit" << std::endl << "> ";
 
         std::cin >> input;
         switch(input)
