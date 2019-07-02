@@ -9,6 +9,7 @@
 #include "PortalProjectile.h"
 #include "StaticBlock.h"
 #include "DynamicBlock.h"
+#include "FinishBlock.h"
 #include "VectorOp.h"
 #include "Array.h"
 
@@ -25,6 +26,7 @@ public:
 	StaticBlock& addStaticBlock(StaticBlock* staticBlock);
 	DynamicBlock& addDynamicBlock(DynamicBlock* dynamicBlock);
 	PortalProjectile& addPortalProjectile(PortalProjectile* portalProjectile);
+	FinishBlock& addFinishBlock(FinishBlock* finishBlock);
 
 	Player& getPlayer() { return *player; }
 	std::vector<Entity*>& getEntities() { return entities; }
@@ -33,6 +35,7 @@ public:
 	Array<Portal*, 2>& getPortals() { return portals; }
 	PortalProjectile& getPortalProjectile(Portal::Type type) { return *portalProj[type]; }
 	std::vector<DisplaceableEntity*>& getDisplaceableEntities() { return displaceableEntities; }
+	FinishBlock& getFinishBlock() { return *finishBlock; }
 
 	bool hasPortalProjectile(Portal::Type type);
 
@@ -50,6 +53,7 @@ private:
 	Player* player;
 	Array<Portal*, 2> portals;
 	Array<PortalProjectile*, 2> portalProj;
+	FinishBlock* finishBlock;
 
 	bool* resize;
 };

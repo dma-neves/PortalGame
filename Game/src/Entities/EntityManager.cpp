@@ -70,6 +70,15 @@ PortalProjectile& EntityManager::addPortalProjectile(PortalProjectile* portalPro
 	return *portalProjectile;
 }
 
+FinishBlock& EntityManager::addFinishBlock(FinishBlock* finishBlock)
+{
+	addEntity(finishBlock);
+
+	this->finishBlock = finishBlock;
+	colEntities.push_back(finishBlock);
+	return *finishBlock;
+}
+
 void EntityManager::eraseDeadEntities()
 {
 	for(int i = 0; i < entities_uptr.size(); i++)

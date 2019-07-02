@@ -2,6 +2,7 @@
 #include "StaticBlock.h"
 #include "Player.h"
 #include "DynamicBlock.h"
+#include "FinishBlock.h"
 
 DynamicEntity::DynamicEntity(Rect rect, std::string fileName, std::string texturePack, std::vector<Entity*>* colEntities, 
 float gravity, float resistance) :
@@ -111,5 +112,8 @@ void DynamicEntity::handleCollisionEffect(Vector2D updatedPos, float dt, std::ve
 			}
 			if(velocity.y > 0) onGround = false;
 		}
+
+		FinishBlock* fb = dynamic_cast<FinishBlock*>(c.first);
+		if(fb != nullptr) fb->reached = true;
 	}
 }

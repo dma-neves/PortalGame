@@ -83,6 +83,12 @@ void Game::handleEvents(float dt)
 			shootPortal(mousePos, Portal::RED);
 		}
 	}
+
+	if(entityMng.getFinishBlock().reached == true)
+	{
+		isRunning = false;
+		std::cout << "End of level reached" << std::endl;
+	}
 }
 
 void Game::shootPortal(Vector2D mousePos, Portal::Type type)

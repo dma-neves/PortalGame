@@ -47,8 +47,8 @@ void LevelLoader::loadLevel(std::string fileName)
 					break;
 
 				case 'F':
-					entityMng->addStaticBlock(new StaticBlock(Rect(Vector2D(x-0.5f, y-0.5f), Vector2D(2,2)), 
-					"finishBlock.png", texturePack, true));
+					entityMng->addFinishBlock(new FinishBlock(Rect(Vector2D(x-0.5f, y-0.5f), Vector2D(2,2)), 
+					"finishBlock.png", texturePack));
 					break;
 
 				case '+':

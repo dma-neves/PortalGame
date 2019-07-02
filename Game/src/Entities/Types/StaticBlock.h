@@ -6,13 +6,10 @@
 class StaticBlock : public Entity
 {
 public:
-    StaticBlock(Rect rect, std::string fileName, std::string texturePack, bool levelFinish = false) :
-    Entity(rect, fileName, texturePack), finishBlock(finishBlock) {}
+    StaticBlock(Rect rect, std::string fileName, std::string texturePack) :
+    Entity(rect, fileName, texturePack) {}
 
-    bool isFinishBlock() { return finishBlock; }
-
-private:
-    bool finishBlock;
+    virtual bool isFinishBlock() { return false; }
 };
 
 #endif
