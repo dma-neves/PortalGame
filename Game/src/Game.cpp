@@ -6,7 +6,6 @@ entityMng(&resize),
 entityRen(Rect(Vector2D(20,5), Vector2D(50, 50)), wSize, &entityMng.getEntities(), &resize),
 levelLoader(&entityMng)
 {
-	levelFile = "level_1.txt";
 	levelLoader.loadLevel(levelFile);
 
 	entityMng.addPortal(new Portal(Rect(Vector2D(), Vector2D(1, 1)), "bluePortal.png", levelLoader.getPack(), Portal::BLUE));
