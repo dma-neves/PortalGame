@@ -1,8 +1,7 @@
-INC_DIRECOTRY=src -I src/Util -I src/AssetManagers -I src/Entities -I src/Entities/Types -I src/Level -I src/Events 
-INC_DIRECOTRY+=-I src/Events/EntityEvents
+INC_DIRECOTRY=src -I src/Util -I src/AssetManagers -I src/Entities -I src/Entities/Types -I src/Level
 LIBS = -lsfml-graphics -lsfml-window -lsfml-system
 
-CPPC=g++ -std=c++11
+CPPC=g++ -std=c++11 -g
 
 OBJECT_FILES=obj/main.o obj/Game.o obj/Vector2D.o obj/Rect.o obj/Entity.o obj/TextureManager.o obj/EntityRenderer.o
 OBJECT_FILES+=obj/Player.o obj/LevelLoader.o obj/DynamicEntity.o obj/EntityManager.o obj/PortalProjectile.o obj/DisplaceableEntity.o

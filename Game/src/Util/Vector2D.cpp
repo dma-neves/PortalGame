@@ -1,9 +1,7 @@
 #include "Vector2D.h"
 
-Vector2D::Vector2D(float x, float y)
+Vector2D::Vector2D(float x, float y) : x(x), y(y)
 {
-    this->x = x;
-    this->y = y;
 }
 
 Vector2D::Vector2D(sf::Vector2f vec)
@@ -26,71 +24,56 @@ Vector2D::Vector2D(sf::Vector2i vec)
 
 Vector2D Vector2D::operator+(Vector2D vec)
 {
-    Vector2D newVector(this->x + vec.x, this->y + vec.y);
-    return newVector;
+    return Vector2D(x + vec.x, y + vec.y);
 }
 
 Vector2D Vector2D::operator-(Vector2D vec)
 {
-    Vector2D newVector(this->x - vec.x, this->y - vec.y);
-    return newVector;
+    return Vector2D(x - vec.x, y - vec.y);
 }
 
 Vector2D Vector2D::operator*(float scaler)
 {
-    Vector2D newVector(this->x * scaler, this->y * scaler);
-    return newVector;
+    return Vector2D(x * scaler, y * scaler);
 }
 
 Vector2D Vector2D::operator/(float scaler)
 {
-    Vector2D newVector(this->x / scaler, this->y / scaler);
-    return newVector;
+    return Vector2D(x / scaler, y / scaler);
 }
 
 void Vector2D::operator+=(Vector2D vec)
 {
-    this->x += vec.x;
-    this->y += vec.y;
+    x += vec.x;
+    y += vec.y;
 }
 
 void Vector2D::operator-=(Vector2D vec)
 {
-    this->x -= vec.x;
-    this->y -= vec.y;
+    x -= vec.x;
+    y -= vec.y;
 }
 
 void Vector2D::operator*=(float scaler)
 {
-    this->x *= scaler;
-    this->y *= scaler;
+    x *= scaler;
+    y *= scaler;
 }
 
 void Vector2D::operator/=(float scaler)
 {
-    this->x /= scaler;
-    this->y /= scaler;
+    x /= scaler;
+    y /= scaler;
 }
 
 void Vector2D::operator=(float num)
 {
     if(num == 0)
     {
-        this->x = 0;
-        this->y = 0;
+        x = 0;
+        y = 0;
     }
     else std::cout << "Error: Invalid Vector2D operation: Vector2D = " << num << std::endl;
-}
-
-Vector2D& Vector2D::setMagnitude(float mag)
-{
-    float v_x = x * (mag / magnitude());
-    float v_y = y * (mag / magnitude());
-
-    x = v_x;
-    y = v_y;
-
-    return *this;
 }
 
 float Vector2D::magnitude()
@@ -105,7 +88,7 @@ bool Vector2D::null()
 
 float Vector2D::angle(Vector2D vec)
 {
-    float c = (x*vec.x + y*vec.y) / (this->magnitude() * vec.magnitude());
+    float c = (x*vec.x + y*vec.y) / (magnitude() * vec.magnitude());
 
     if(c >= -1 and c <= 1) return acos(c);
 

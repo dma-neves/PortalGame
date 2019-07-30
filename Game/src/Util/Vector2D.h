@@ -27,9 +27,9 @@ public:
     void operator=(float num);
 
     bool operator==(Vector2D vec) { return (x == vec.x && y == vec.y); }
-    bool operator!=(Vector2D vec) { return (x != vec.x && y != vec.y); }
+    bool operator!=(Vector2D vec) { return !(*this==vec); }
 
-    Vector2D& setMagnitude(float mag);
+    Vector2D& setMagnitude(float mag) { *this *= (mag / magnitude()); return *this; }
     float magnitude();
     bool null();
     float angle(Vector2D vec);
