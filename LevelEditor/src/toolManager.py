@@ -1,9 +1,9 @@
 STATIC_BLOCK = "StaticBlock"
 DYNAMIC_BLOCK = "DynamicBlock"
 PLAYER = "Player"
-FinishBlock = "FinishBlock"
+FINISH_BLOCK = "FinishBlock"
 GATE = "Gate"
-Lever = "Lever"
+LEVER = "Lever"
 
 class ToolManager:
 
