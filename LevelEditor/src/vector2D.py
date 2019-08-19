@@ -10,6 +10,7 @@ class Vector2D:
         return self
 
     def getSub(self, vec): return Vector2D(self.x - vec.x, self.y - vec.y)
+    def getAdd(self, vec): return Vector2D(self.x + vec.x, self.y + vec.y)
     def getTuple(self): return (self.x, self.y)
-
     def copy(self): return Vector2D(self.x, self.y)
+    def equals(self, vec): return self.x == vec.x and self.y == vec.y

@@ -1,5 +1,7 @@
 import pygame
 import camera
+import vector2D
+import const
 
 class LevelRenderer:
 
@@ -9,6 +11,9 @@ class LevelRenderer:
 
     def addSprite(self, entity):
         self.sprites.add(entity)
+
+    def removeSprite(self, entity):
+        self.sprites.remove(entity)
 
     def render(self, window):
 
@@ -25,3 +30,10 @@ class LevelRenderer:
             sprite.rect.center = drawPos.getTuple()
 
         self.sprites.draw(window)
+
+    def getWorldPos(self, pos):
+
+        aux = pos.getSub(vector2D.Vector2D(const.WINDOW_WIDTH/2, const.WINDOW_HEIGHT/2))
+        aux.scale(1.0/self.camera.scale)
+    
+        return self.camera.pos.getAdd(aux)
