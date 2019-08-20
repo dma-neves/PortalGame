@@ -21,7 +21,8 @@ class LevelEditor:
         pygame.init()
 
         self.level = level
-        level.setCamera(camera = camera.Camera(pos = vector2D.Vector2D(int(level.size.x/2), int(level.size.y/2)), size = vector2D.Vector2D(40, 40), windowSize = vector2D.Vector2D(const.WINDOW_WIDTH, const.WINDOW_HEIGHT)))
+        cameraSize = vector2D.Vector2D(const.WINDOW_WIDTH/20, const.WINDOW_HEIGHT/20)
+        level.setCamera(camera = camera.Camera(pos = vector2D.Vector2D(int(level.size.x/2), int(level.size.y/2)), size = cameraSize, windowSize = vector2D.Vector2D(const.WINDOW_WIDTH, const.WINDOW_HEIGHT)))
         self.toolMng = toolManager.ToolManager()
         self.running = True 
 
@@ -31,7 +32,7 @@ class LevelEditor:
 
         blockSize = vector2D.Vector2D(const.WINDOW_WIDTH / 10, const.WINDOW_WIDTH / 30)
         thickness = const.WINDOW_WIDTH / 150
-        dist = blockSize.x + thickness * 4
+        dist = blockSize.x + thickness * 3.5
         aux = thickness*4
 
         self.txtBlock = textBlock.TextBlock(pos = vector2D.Vector2D(aux, thickness*4), center = False, size = blockSize, borderThickness = thickness, text = self.toolMng.currentTool); aux += dist
@@ -41,7 +42,8 @@ class LevelEditor:
         self.buttons.append(button.Button(pos = vector2D.Vector2D(aux, thickness*4), center = False, size = blockSize, borderThickness = thickness, text = const.PLAYER)); aux += dist
         self.buttons.append(button.Button(pos = vector2D.Vector2D(aux, thickness*4), center = False, size = blockSize, borderThickness = thickness, text = const.FINISH_BLOCK)); aux += dist
         self.buttons.append(button.Button(pos = vector2D.Vector2D(aux, thickness*4), center = False, size = blockSize, borderThickness = thickness, text = const.GATE)); aux += dist
-        self.buttons.append(button.Button(pos = vector2D.Vector2D(aux, thickness*4), center = False, size = blockSize, borderThickness = thickness, text = const.LEVER))
+        self.buttons.append(button.Button(pos = vector2D.Vector2D(aux, thickness*4), center = False, size = blockSize, borderThickness = thickness, text = const.LEVER)); aux += dist
+        self.buttons.append(button.Button(pos = vector2D.Vector2D(aux, thickness*4), center = False, size = blockSize, borderThickness = thickness, text = const.SAVE))
 
     def run(self):
 
@@ -64,25 +66,33 @@ class LevelEditor:
 
         pressed = pygame.key.get_pressed()
 
-        if pressed[pygame.K_RIGHT]: self.level.renderer.camera.pos.x += 1
-        if pressed[pygame.K_LEFT]: self.level.renderer.camera.pos.x -= 1
-        if pressed[pygame.K_UP]: self.level.renderer.camera.pos.y -= 1
-        if pressed[pygame.K_DOWN]: self.level.renderer.camera.pos.y += 1
+        if pressed[pygame.K_d]: self.level.renderer.camera.pos.x += 1
+        if pressed[pygame.K_a]: self.level.renderer.camera.pos.x -= 1
+        if pressed[pygame.K_w]: self.level.renderer.camera.pos.y -= 1
+        if pressed[pygame.K_s]: self.level.renderer.camera.pos.y += 1
 
         mx, my = pygame.mouse.get_pos()
+        worldPos = self.level.renderer.getWorldPos(vector2D.Vector2D(mx, my))
+        buttonPressed = False
   
         for button in self.buttons:
-            if button.isOverlapping(vector2D.Vector2D(mx, my)): 
+            if button.isOverlapping(vector2D.Vector2D(mx, my)):
+                buttonPressed = True
                 button.color = const.RED
                 if pygame.mouse.get_pressed()[0]:
-                    self.toolMng.currentTool = button.text
-                    self.txtBlock.setText(self.toolMng.currentTool)
+
+                    if button.text == const.SAVE:
+                        self.level.save()
+                    
+                    else:
+                        self.toolMng.currentTool = button.text
+                        self.txtBlock.setText(self.toolMng.currentTool)
 
             else: button.color = const.DARK_GREY
 
-        if pygame.mouse.get_pressed()[2]:
+        if not buttonPressed and pygame.mouse.get_pressed()[0]: self.toolMng.handleActivation(self.level, worldPos)
 
-            worldPos = self.level.renderer.getWorldPos(vector2D.Vector2D(mx, my))
+        if pygame.mouse.get_pressed()[2]:
             entity = self.level.getEntity(worldPos)
             if entity != None: self.level.removeEntity(entity)
 

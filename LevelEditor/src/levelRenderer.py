@@ -9,6 +9,9 @@ class LevelRenderer:
         self.camera = None
         self.sprites = pygame.sprite.Group()
 
+    def setSize(self, size):
+        self.size = size
+
     def addSprite(self, entity):
         self.sprites.add(entity)
 
@@ -16,6 +19,10 @@ class LevelRenderer:
         self.sprites.remove(entity)
 
     def render(self, window):
+
+        pos = vector2D.Vector2D(-0.5,-0.5).getSub( self.camera.getOrigin() ).scale( self.camera.scale )
+        size = self.size.copy().scale( self.camera.scale )
+        pygame.draw.rect(window, const.DARK_GREY, [pos.x, pos.y, size.x, size.y])
 
         for sprite in self.sprites:
 

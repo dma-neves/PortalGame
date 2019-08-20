@@ -2,10 +2,16 @@ import levelEditor
 import level
 import vector2D
 import os
+import const
 
 LEVEL_DIR = "../../Assets/Levels/"
 
 def main():
+
+    const.WINDOW_WIDTH = int( raw_input("Window width=height (Must be a multiple of 20): ") )
+    const.WINDOW_HEIGHT = const.WINDOW_WIDTH
+    print("")
+
     lvlEditor = None
     levelFile = None
     validInput = False
@@ -31,20 +37,21 @@ def main():
         lvlEditor = levelEditor.LevelEditor(level = level.Level(levelFile))
 
     else:
-        texturePack = None
-        validInput = False
-        while not validInput:
-            texturePack = raw_input("Texture Pack: ")
-            file = open("../../Assets/Textures/texturePacks.txt","r")
-            content = file.read().splitlines()
+        texturePack = "Default/"
 
-            for pack in content:
-                if pack == texturePack:
-                    validInput = True
-                    break
-
-            if not validInput:
-                print("Error: Invalid input")
+        #validInput = False
+        #while not validInput:
+        #    texturePack = raw_input("Texture Pack: ")
+        #    file = open("../../Assets/Textures/texturePacks.txt","r")
+        #    content = file.read().splitlines()
+        #
+        #    for pack in content:
+        #        if pack == texturePack:
+        #            validInput = True
+        #            break
+        #
+        #    if not validInput:
+        #        print("Error: Invalid input")
 
         validInput = False
         while not validInput:
@@ -56,7 +63,7 @@ def main():
             else:
                 print("Error: Invalid Input")
         
-        lvlEditor = levelEditor.LevelEditor(level = level.Level(levelFile, texturePack, size = vector2D.Vector2D(levelWidth, levelHeight)))
+        lvlEditor = levelEditor.LevelEditor(level = level.Level(file = levelFile, texturePack = texturePack, size = vector2D.Vector2D(levelWidth, levelHeight)))
     
     lvlEditor.run()
 

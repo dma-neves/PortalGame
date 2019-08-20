@@ -7,7 +7,9 @@ class Level:
 
     def __init__(self, file = None, texturePack = None, size = None):
 
+        self.file = file
         self.entities = []
+        self.gates = [] #List of pairs [lever, gate]
         self.renderer = levelRenderer.LevelRenderer()
 
         if texturePack:
@@ -15,10 +17,12 @@ class Level:
             self.size = size
         
         else:
-            self.loadLevel(file)
+            self.loadLevel()
 
-    def loadLevel(self, file):
-        file = const.LEVEL_DIR + file
+        self.renderer.setSize(self.size)
+
+    def loadLevel(self):
+        file = const.LEVEL_DIR + self.file
         file = open(file,"r")
         content = file.read().split()
 
@@ -65,8 +69,8 @@ class Level:
             leverPos = vector2D.Vector2D( int(content[strIndex+2]), int(content[strIndex+3]) )
             strIndex += 4
 
-            self.addEntity(entity = entity.Entity(pos = leverPos, size = vector2D.Vector2D(1,1), textureFile = const.TEXTURE_DIR + self.texturePack + "lever.png", typ = const.LEVER))
-            self.addEntity(entity = entity.Entity(pos = gatePos, size = vector2D.Vector2D(1,2), textureFile = const.TEXTURE_DIR + self.texturePack + "gate.png", typ = const.GATE))
+            self.addLever(entity = entity.Entity(pos = leverPos, size = vector2D.Vector2D(1,1), textureFile = const.TEXTURE_DIR + self.texturePack + "lever.png", typ = const.LEVER))
+            self.addGate(entity = entity.Entity(pos = gatePos, size = vector2D.Vector2D(1,2), textureFile = const.TEXTURE_DIR + self.texturePack + "gate.png", typ = const.GATE))
 
         print("Level loaded successfully")
 
@@ -92,3 +96,28 @@ class Level:
             if pos.x <= entity.pos.x+entity.size.x/2.0 and pos.x >= entity.pos.x-entity.size.x/2.0 and pos.y <= entity.pos.y+entity.size.y/2.0 and pos.y >= entity.pos.y-entity.size.y/2.0: return entity
 
         return None
+
+    def addLever(self, entity):
+        self.addEntity(entity)
+
+        for pair in self.gates:
+            if pair[1] != None: 
+                pair[1] = entity
+                return None
+
+        self.gates.append( [entity, None] )
+
+    def addGate(self, entity):
+        self.addEntity(entity)
+        added = False
+
+        for pair in self.gates:
+            if pair[0] != None: 
+                pair[0] = entity
+                return None
+
+        self.gates.append( [None, entity] )
+
+    def save(self):
+        file = const.LEVEL_DIR + self.file
+        file = open(file,"w")

@@ -19,3 +19,5 @@ PLAYER = "Player"
 FINISH_BLOCK = "FinishBlock"
 GATE = "Gate"
 LEVER = "Lever"
+
+SAVE = "Save"
