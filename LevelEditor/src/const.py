@@ -1,4 +1,5 @@
 LEVEL_DIR = "../../Assets/Levels/"
+LEVEL_NAMES_FILE_DIR = "../../Assets/Levels/levelNames.txt"
 TEXTURE_DIR = "../../Assets/Textures/"
 FONT_DIR = "../../Assets/Fonts/"
 

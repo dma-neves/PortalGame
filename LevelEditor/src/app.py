@@ -8,8 +8,32 @@ LEVEL_DIR = "../../Assets/Levels/"
 
 def main():
 
-    const.WINDOW_WIDTH = int( raw_input("Window width=height (Must be a multiple of 20): ") )
-    const.WINDOW_HEIGHT = const.WINDOW_WIDTH
+    validInput = False
+    print("Window size:")
+    print("0) 400*400")
+    print("1) 600*600")
+    print("2) 800*800")
+    print("3) 1000*1000")
+
+    while not validInput:
+        option = int(raw_input("> "))
+        validInput = True
+        if option == 0:
+            const.WINDOW_WIDTH = 400
+            const.WINDOW_HEIGHT = 400
+        elif option == 1:
+            const.WINDOW_WIDTH = 600
+            const.WINDOW_HEIGHT = 600
+        elif option == 2:
+            const.WINDOW_WIDTH = 800
+            const.WINDOW_HEIGHT = 800
+        elif option == 3:
+            const.WINDOW_WIDTH = 1000
+            const.WINDOW_HEIGHT = 1000
+        else: 
+            validInput = False
+            print("Error: Invalid input")
+
     print("")
 
     lvlEditor = None
@@ -34,24 +58,10 @@ def main():
             print("Error: Invalid level name")
 
     if cmd == "l":
-        lvlEditor = levelEditor.LevelEditor(level = level.Level(levelFile))
+        lvlEditor = levelEditor.LevelEditor(level = level.Level(levelFile, levelName))
 
     else:
-        texturePack = "Default/"
-
-        #validInput = False
-        #while not validInput:
-        #    texturePack = raw_input("Texture Pack: ")
-        #    file = open("../../Assets/Textures/texturePacks.txt","r")
-        #    content = file.read().splitlines()
-        #
-        #    for pack in content:
-        #        if pack == texturePack:
-        #            validInput = True
-        #            break
-        #
-        #    if not validInput:
-        #        print("Error: Invalid input")
+        texturePack = "DefaultPack/"
 
         validInput = False
         while not validInput:
@@ -63,13 +73,9 @@ def main():
             else:
                 print("Error: Invalid Input")
         
-        lvlEditor = levelEditor.LevelEditor(level = level.Level(file = levelFile, texturePack = texturePack, size = vector2D.Vector2D(levelWidth, levelHeight)))
+        lvlEditor = levelEditor.LevelEditor(level = level.Level(file = levelFile, name = levelName, texturePack = texturePack, size = vector2D.Vector2D(levelWidth, levelHeight)))
     
     lvlEditor.run()
-
-print("------------------------------------")
-print("| EDITOR NOT FULLY IMPLEMENTED YET |")
-print("------------------------------------")
 
 main()
 

@@ -5,9 +5,10 @@ import const
 
 class Level:
 
-    def __init__(self, file = None, texturePack = None, size = None):
+    def __init__(self, file, name, texturePack = None, size = None):
 
         self.file = file
+        self.name = name
         self.entities = []
         self.gates = [] #List of pairs [lever, gate]
         self.renderer = levelRenderer.LevelRenderer()
@@ -90,10 +91,13 @@ class Level:
     def render(self, window):
         self.renderer.render(window)
 
-    def getEntity(self, pos):
+    def getEntity(self, pos, saveMode = False):
         
         for entity in self.entities:
-            if pos.x <= entity.pos.x+entity.size.x/2.0 and pos.x >= entity.pos.x-entity.size.x/2.0 and pos.y <= entity.pos.y+entity.size.y/2.0 and pos.y >= entity.pos.y-entity.size.y/2.0: return entity
+            if pos.x <= entity.pos.x+entity.size.x/2.0 and pos.x >= entity.pos.x-entity.size.x/2.0 and pos.y <= entity.pos.y+entity.size.y/2.0 and pos.y >= entity.pos.y-entity.size.y/2.0: 
+                if not saveMode or entity.size.y == 1: return entity
+                
+                elif pos.y > entity.pos.y: return entity
 
         return None
 
@@ -101,8 +105,8 @@ class Level:
         self.addEntity(entity)
 
         for pair in self.gates:
-            if pair[1] != None: 
-                pair[1] = entity
+            if pair[0] == None and pair[1] != None: 
+                pair[0] = entity
                 return None
 
         self.gates.append( [entity, None] )
@@ -112,8 +116,8 @@ class Level:
         added = False
 
         for pair in self.gates:
-            if pair[0] != None: 
-                pair[0] = entity
+            if pair[0] != None and pair[1] == None: 
+                pair[1] = entity
                 return None
 
         self.gates.append( [None, entity] )
@@ -121,3 +125,34 @@ class Level:
     def save(self):
         file = const.LEVEL_DIR + self.file
         file = open(file,"w")
+
+        file.write(self.texturePack + "\n")
+        file.write( str(self.size.x) + "\n" + str(self.size.y)  + "\n")
+
+        for y in range(0, self.size.y):
+            for x in range(0, self.size.x):
+
+                entity = self.getEntity(pos = vector2D.Vector2D(x,y), saveMode = True)
+                if entity == None: file.write(".")
+                elif entity.typ == const.STATIC_BLOCK: file.write("#")
+                elif entity.typ == const.DYNAMIC_BLOCK: file.write("O")
+                elif entity.typ == const.FINISH_BLOCK: file.write("F")
+                elif entity.typ == const.PLAYER: file.write("P")
+                else: file.write(".")
+            
+            file.write("\n")
+
+        file.write( str(len(self.gates)) + "\n")
+
+        for i in range(0, len(self.gates)):
+            file.write( str(int(round(self.gates[i][1].pos.x))) + " " + str(int(round(self.gates[i][1].pos.y))) + "\n" )
+            file.write( str(int(round(self.gates[i][0].pos.x))) + " " + str(int(round(self.gates[i][0].pos.y))) + "\n" )
+
+        levelNamesFile = open(const.LEVEL_NAMES_FILE_DIR, "r")
+        content = levelNamesFile.read().split()
+        if not (self.name in content):
+            f = open(const.LEVEL_NAMES_FILE_DIR, "a")
+            f.write("\n" + self.name)
+            
+
+        print("Level saved successfully")

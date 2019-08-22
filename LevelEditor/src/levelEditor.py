@@ -74,6 +74,9 @@ class LevelEditor:
         mx, my = pygame.mouse.get_pos()
         worldPos = self.level.renderer.getWorldPos(vector2D.Vector2D(mx, my))
         buttonPressed = False
+
+        if not pygame.mouse.get_pressed()[0]:
+            for button in self.buttons: button.released = True
   
         for button in self.buttons:
             if button.isOverlapping(vector2D.Vector2D(mx, my)):
@@ -82,9 +85,12 @@ class LevelEditor:
                 if pygame.mouse.get_pressed()[0]:
 
                     if button.text == const.SAVE:
-                        self.level.save()
+                        if button.released:
+                            self.level.save()
+                            button.released = False
                     
                     else:
+
                         self.toolMng.currentTool = button.text
                         self.txtBlock.setText(self.toolMng.currentTool)
 

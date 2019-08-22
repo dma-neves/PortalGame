@@ -2,7 +2,7 @@
 
 int main()
 {
-	std::cout << "Window height: ";
+	std::cout << "Window width=height: ";
 	int height;
 	std::cin >> height;
 
