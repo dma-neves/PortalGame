@@ -8,7 +8,8 @@
 #include "Entity.h"
 
 #define DEFAULT_GRAVITY 2
-#define DEFAULT_RESISTANCE 0.06
+#define DEFAULT_AIR_RESISTANCE 0.002
+#define DEFAULT_GROUND_RESISTANCE 0.06
 
 class Collision
 {
@@ -27,7 +28,7 @@ class DynamicEntity : public Entity
 {
 public:
 	DynamicEntity(Rect rect, std::string fileName, std::string texturePack, std::vector<Entity*>* colEntities, 
-	float gravity = DEFAULT_GRAVITY, float resistance = DEFAULT_RESISTANCE);
+	float airResistance = DEFAULT_AIR_RESISTANCE, float groundResistance = DEFAULT_GROUND_RESISTANCE, float gravity = DEFAULT_GRAVITY);
 
 	void update(float dt) override;
 	void handleCollision(Vector2D updatedPos, float dt);
@@ -44,7 +45,8 @@ public:
 
 private:
 	float gravity;
-	float resistance;
+	float airResistance;
+	float groundResistance;
 
 protected:
 	std::vector<Entity*>* colEntities; //Collidable Entity

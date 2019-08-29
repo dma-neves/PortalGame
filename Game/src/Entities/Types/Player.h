@@ -8,6 +8,8 @@
 #include "DisplaceableEntity.h"
 #include "Array.h"
 
+#define AIR_RESISTANCE 0.06
+
 class Player : public DisplaceableEntity
 {
 public:

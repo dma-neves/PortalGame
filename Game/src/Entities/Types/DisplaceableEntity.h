@@ -13,7 +13,7 @@ class DisplaceableEntity : public DynamicEntity
 {
 public:
 	DisplaceableEntity(Rect rect, std::string fileName, std::string texturePack, std::vector<Entity*>* colEntities,
-	Array<Portal*, 2>* portals);
+	Array<Portal*, 2>* portals, float airResistance = DEFAULT_AIR_RESISTANCE, float groundResistance = DEFAULT_GROUND_RESISTANCE);
 
 	void handleCollisionEffect(Vector2D updatedPos, float dt, std::vector<std::pair<Entity*, Collision>>& colliders) override;
 

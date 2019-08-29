@@ -62,10 +62,14 @@ void Game::handleEvents(float dt)
 			window.close();
 		}
 
-		if(sf::Keyboard::isKeyPressed(sf::Keyboard::D))     entityMng.getPlayer().moveRight(); 
+		if(sf::Keyboard::isKeyPressed(sf::Keyboard::D))      entityMng.getPlayer().moveRight(); 
 		else if(sf::Keyboard::isKeyPressed(sf::Keyboard::A)) entityMng.getPlayer().moveLeft();
+		if(sf::Keyboard::isKeyPressed(sf::Keyboard::W))      entityMng.getPlayer().jump();
 
-		if(sf::Keyboard::isKeyPressed(sf::Keyboard::W)) entityMng.getPlayer().jump();
+		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) entityRen.movCamera(entityRen.RIGHT, dt);
+		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) entityRen.movCamera(entityRen.LEFT, dt);
+		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) entityRen.movCamera(entityRen.UP, dt);
+		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) entityRen.movCamera(entityRen.DOWN, dt);
 
 		if(!sf::Mouse::isButtonPressed(sf::Mouse::Left)) lMouseRel = true;
 		if(!sf::Mouse::isButtonPressed(sf::Mouse::Right)) rMouseRel = true;

@@ -6,11 +6,16 @@
 
 #include "Entity.h"
 
+#define CAMERA_SPEED 5
+
 class EntityRenderer
 {
 public:
+	enum Direction {LEFT = 0, RIGHT, UP, DOWN};
+
 	EntityRenderer(Rect camera, Vector2D wSize, std::vector<Entity*>* entities, bool* resize);
 
+	void movCamera(Direction dir, float dt);
 	void resizeCamera(Vector2D resizer, Vector2D wSize, bool scaleEntities);
 	void scaleEntities() { for(Entity* e : *entities) e->scale(scalar); }
 

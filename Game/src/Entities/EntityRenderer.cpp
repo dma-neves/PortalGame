@@ -5,6 +5,17 @@ camera(camera), entities(entities), resize(resize)
 {
 }
 
+void EntityRenderer::movCamera(Direction dir, float dt)
+{
+	switch(dir)
+	{
+		case LEFT:  camera.pos.x -= CAMERA_SPEED * dt; break;
+		case RIGHT: camera.pos.x += CAMERA_SPEED * dt; break;
+		case UP:    camera.pos.y -= CAMERA_SPEED * dt; break;
+		case DOWN:  camera.pos.y += CAMERA_SPEED * dt; break;
+	}
+}
+
 void EntityRenderer::resizeCamera(Vector2D resizer, Vector2D wSize, bool scaleEntities)
 {
 	camera.size += resizer;

@@ -1,8 +1,8 @@
 #include "DisplaceableEntity.h"
 
 DisplaceableEntity::DisplaceableEntity(Rect rect, std::string fileName, std::string texturePack, std::vector<Entity*>* colEntities,
-Array<Portal*, 2>* portals) :
-DynamicEntity(rect, fileName, texturePack, colEntities), portals(portals)
+Array<Portal*, 2>* portals, float airResistance, float groundResistance) :
+DynamicEntity(rect, fileName, texturePack, colEntities, airResistance, groundResistance), portals(portals)
 {
 }
 

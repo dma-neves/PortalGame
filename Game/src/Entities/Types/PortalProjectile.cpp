@@ -2,7 +2,7 @@
 
 PortalProjectile::PortalProjectile(Rect rect, std::string fileName, std::string texturePack,
 Portal::Type type, std::vector<Entity*>* colEntities, Array<Portal*, 2>* portals, bool* resize) :
-DynamicEntity(rect, fileName, texturePack, colEntities, 0, 0), type(type), portals(portals), resize(resize)
+DynamicEntity(rect, fileName, texturePack, colEntities, 0, 0, 0), type(type), portals(portals), resize(resize)
 {
 }
 

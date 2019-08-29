@@ -5,10 +5,11 @@
 #include "FinishBlock.h"
 
 DynamicEntity::DynamicEntity(Rect rect, std::string fileName, std::string texturePack, std::vector<Entity*>* colEntities, 
-float gravity, float resistance) :
+float airResistance, float groundResistance, float gravity) :
 Entity(rect, fileName, texturePack), 
 gravity(gravity),
-resistance(resistance),
+airResistance(airResistance),
+groundResistance(groundResistance),
 colEntities(colEntities)
 {
 	acceleration = Vector2D(0, gravity);
@@ -16,6 +17,8 @@ colEntities(colEntities)
 
 void DynamicEntity::update(float dt)
 {
+	float resistance = onGround ? groundResistance : airResistance;
+
 	velocity += acceleration*dt;
 	std::abs(velocity.x) - resistance < 0 ? velocity.x = 0 : velocity.x -= (velocity.x < 0 ? -1 : 1) * resistance;
 

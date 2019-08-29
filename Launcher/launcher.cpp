@@ -43,9 +43,5 @@ void showLevels()
     std::ifstream namesFile("Assets/Levels/levelNames.txt");
 
     std::string name;
-    while (!namesFile.eof())
-    {
-        namesFile >> name;
-        std::cout << name << std::endl;
-    }
+    while (namesFile >> name) std::cout << name << std::endl;
 } 
