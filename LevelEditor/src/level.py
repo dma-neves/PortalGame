@@ -88,6 +88,14 @@ class Level:
         self.entities.remove(entity)
         self.renderer.removeSprite(entity)
 
+        if entity.typ == const.LEVER:
+            for pair in self.gates:
+                if pair[0] == entity: pair[0] = None
+
+        elif entity.typ == const.GATE:
+            for pair in self.gates:
+                if pair[1] == entity: pair[1] = None
+
     def render(self, window):
         self.renderer.render(window)
 
