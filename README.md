@@ -31,5 +31,6 @@
    
  **Editor controls:**
    - W, A, S, D for moving the camera
-   - Mouse to select and use tools
+   - Left mouse to select and use tools
+   - Right mouse to delete entities (tiles)
    - Escape to exit the editor
