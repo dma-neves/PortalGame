@@ -87,7 +87,7 @@ void Game::handleEvents(float dt)
 	if(entityMng.getFinishBlock().reached == true)
 	{
 		isRunning = false;
-		std::cout << "End of level reached" << std::endl;
+		std::cout << "\nEnd of level reached" << std::endl;
 	}
 }
 
