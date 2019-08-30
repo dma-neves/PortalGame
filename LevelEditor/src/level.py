@@ -162,7 +162,7 @@ class Level:
             content = levelNamesFile.read().split()
             if not (self.name in content):
                 f = open(const.LEVEL_NAMES_FILE_DIR, "a")
-                f.write("\n" + self.name)
+                f.write(self.name + "\n")
                 
 
             print("Level saved successfully")
