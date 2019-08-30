@@ -24,5 +24,5 @@ class ToolManager:
             elif self.currentTool == const.GATE:
                 pos.y -= 0.5
                 size.y = 2
-                level.addGate(entity.Entity(pos = pos ,size = size, textureFile = const.TEXTURE_DIR + level.texturePack + "gate.png", typ = self.currentTool))
-            elif self.currentTool == const.LEVER: level.addLever(entity.Entity(pos = pos ,size = size, textureFile = const.TEXTURE_DIR + level.texturePack + "lever.png", typ = self.currentTool))
+                level.addEntity(entity.Entity(pos = pos ,size = size, textureFile = const.TEXTURE_DIR + level.texturePack + "gate.png", typ = self.currentTool))
+            elif self.currentTool == const.LEVER: level.addEntity(entity.Entity(pos = pos ,size = size, textureFile = const.TEXTURE_DIR + level.texturePack + "lever.png", typ = self.currentTool))

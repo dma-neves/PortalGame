@@ -10,7 +10,8 @@ class Level:
         self.file = file
         self.name = name
         self.entities = []
-        self.gates = [] #List of pairs [lever, gate]
+        self.gates = []
+        self.levers = []
         self.renderer = levelRenderer.LevelRenderer()
 
         if texturePack:
@@ -70,8 +71,8 @@ class Level:
             leverPos = vector2D.Vector2D( int(content[strIndex+2]), int(content[strIndex+3]) )
             strIndex += 4
 
-            self.addLever(entity = entity.Entity(pos = leverPos, size = vector2D.Vector2D(1,1), textureFile = const.TEXTURE_DIR + self.texturePack + "lever.png", typ = const.LEVER))
-            self.addGate(entity = entity.Entity(pos = gatePos, size = vector2D.Vector2D(1,2), textureFile = const.TEXTURE_DIR + self.texturePack + "gate.png", typ = const.GATE))
+            self.addEntity(entity = entity.Entity(pos = leverPos, size = vector2D.Vector2D(1,1), textureFile = const.TEXTURE_DIR + self.texturePack + "lever.png", typ = const.LEVER))
+            self.addEntity(entity = entity.Entity(pos = gatePos, size = vector2D.Vector2D(1,2), textureFile = const.TEXTURE_DIR + self.texturePack + "gate.png", typ = const.GATE))
 
         print("Level loaded successfully")
 
@@ -84,17 +85,15 @@ class Level:
         self.entities.append(entity)
         self.renderer.addSprite(entity)
 
+        if entity.typ == const.LEVER: self.levers.append(entity)
+        elif entity.typ == const.GATE: self.gates.append(entity)
+
     def removeEntity(self, entity):
         self.entities.remove(entity)
         self.renderer.removeSprite(entity)
 
-        if entity.typ == const.LEVER:
-            for pair in self.gates:
-                if pair[0] == entity: pair[0] = None
-
-        elif entity.typ == const.GATE:
-            for pair in self.gates:
-                if pair[1] == entity: pair[1] = None
+        if entity.typ == const.LEVER: self.levers.remove(entity)
+        elif entity.typ == const.GATE: self.gates.remove(entity)
 
     def render(self, window):
         self.renderer.render(window)
@@ -109,58 +108,61 @@ class Level:
 
         return None
 
-    def addLever(self, entity):
-        self.addEntity(entity)
+    def hasEntityType(self, typ):
 
-        for pair in self.gates:
-            if pair[0] == None and pair[1] != None: 
-                pair[0] = entity
-                return None
+        for entity in self.entities:
+            if entity.typ == typ: return True
 
-        self.gates.append( [entity, None] )
-
-    def addGate(self, entity):
-        self.addEntity(entity)
-        added = False
-
-        for pair in self.gates:
-            if pair[0] != None and pair[1] == None: 
-                pair[1] = entity
-                return None
-
-        self.gates.append( [None, entity] )
+        return False
 
     def save(self):
-        file = const.LEVEL_DIR + self.file
-        file = open(file,"w")
 
-        file.write(self.texturePack + "\n")
-        file.write( str(self.size.x) + "\n" + str(self.size.y)  + "\n")
+        validSave = True
 
-        for y in range(0, self.size.y):
-            for x in range(0, self.size.x):
+        if len(self.levers) != len(self.gates):
+            print("Error: Difference between number of levers and number of gates while saving")
+            validSave = False
 
-                entity = self.getEntity(pos = vector2D.Vector2D(x,y), saveMode = True)
-                if entity == None: file.write(".")
-                elif entity.typ == const.STATIC_BLOCK: file.write("#")
-                elif entity.typ == const.DYNAMIC_BLOCK: file.write("O")
-                elif entity.typ == const.FINISH_BLOCK: file.write("F")
-                elif entity.typ == const.PLAYER: file.write("P")
-                else: file.write(".")
-            
-            file.write("\n")
+        if not self.hasEntityType(const.PLAYER):
+            print("Error: Non existent player while saving")
+            validSave = False
 
-        file.write( str(len(self.gates)) + "\n")
+        if not self.hasEntityType(const.FINISH_BLOCK):  
+            print("Error: Non existent finish block while saving")
+            validSave = False
 
-        for i in range(0, len(self.gates)):
-            file.write( str(int(round(self.gates[i][1].pos.x))) + " " + str(int(round(self.gates[i][1].pos.y))) + "\n" )
-            file.write( str(int(round(self.gates[i][0].pos.x))) + " " + str(int(round(self.gates[i][0].pos.y))) + "\n" )
+        if validSave:
 
-        levelNamesFile = open(const.LEVEL_NAMES_FILE_DIR, "r")
-        content = levelNamesFile.read().split()
-        if not (self.name in content):
-            f = open(const.LEVEL_NAMES_FILE_DIR, "a")
-            f.write("\n" + self.name)
-            
+            file = const.LEVEL_DIR + self.file
+            file = open(file,"w")
 
-        print("Level saved successfully")
+            file.write(self.texturePack + "\n")
+            file.write( str(self.size.x) + "\n" + str(self.size.y)  + "\n")
+
+            for y in range(0, self.size.y):
+                for x in range(0, self.size.x):
+
+                    entity = self.getEntity(pos = vector2D.Vector2D(x,y), saveMode = True)
+                    if entity == None: file.write(".")
+                    elif entity.typ == const.STATIC_BLOCK: file.write("#")
+                    elif entity.typ == const.DYNAMIC_BLOCK: file.write("O")
+                    elif entity.typ == const.FINISH_BLOCK: file.write("F")
+                    elif entity.typ == const.PLAYER: file.write("P")
+                    else: file.write(".")
+                
+                file.write("\n")
+
+            file.write( str(len(self.gates)) + "\n")
+
+            for i in range(0, len(self.gates)):
+                file.write( str(int(round(self.gates[i].pos.x))) + " " + str(int(round(self.gates[i].pos.y))) + "\n" )
+                file.write( str(int(round(self.levers[i].pos.x))) + " " + str(int(round(self.levers[i].pos.y))) + "\n" )
+
+            levelNamesFile = open(const.LEVEL_NAMES_FILE_DIR, "r")
+            content = levelNamesFile.read().split()
+            if not (self.name in content):
+                f = open(const.LEVEL_NAMES_FILE_DIR, "a")
+                f.write("\n" + self.name)
+                
+
+            print("Level saved successfully")
