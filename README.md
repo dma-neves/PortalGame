@@ -7,7 +7,7 @@
   
 **Requirements:**
   1. Linux operating system
-  2. GCC compiler
+  2. GCC(G++) compiler
   3. Python >= 2 interpreter
 
 **Installing and running the game (Linux):**
@@ -26,6 +26,7 @@
       
  **Game controls:**
    - W, A, S, D for movement
+   - Arrow keys for camera movement
    - Right and Left mouse buttons for shooting portals
    - Escape to exit the game
    
