@@ -28,6 +28,7 @@
    - W, A, S, D for movement
    - Arrow keys for camera movement
    - Right and Left mouse buttons for shooting portals
+   - R to reset the level
    - Escape to exit the game
    
  **Editor controls:**
