@@ -6,7 +6,7 @@
 #include "StaticBlock.h"
 #include "Array.h"
 
-#define SPEED 4
+#define SPEED 8
 #define LIFE_SPAN 8
 
 class PortalProjectile : public DynamicEntity
