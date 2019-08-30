@@ -13,6 +13,12 @@ public:
 
     T& operator[] (int index) { return elements[index]; }
     int size() { return s; }
+    
+    void reset()
+    {
+        delete[] elements;
+        elements = new T[s];
+    }
 
 private:
     T* elements;

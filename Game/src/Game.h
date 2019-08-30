@@ -23,10 +23,12 @@ public:
 	void render();
 
 private:
+	void addPortals();
 	void shootPortal(Vector2D mousePos, Portal::Type type);
 
 private:
 	bool isRunning = true;
+	std::string levelFile;
 	EntityManager entityMng;
 	EntityRenderer entityRen;
 	LevelLoader levelLoader;
@@ -35,6 +37,7 @@ private:
 	sf::Clock clock;
 	bool lMouseRel = false;
 	bool rMouseRel = false;
+	bool resetRel = false;
 
 	bool resize = true;
 };

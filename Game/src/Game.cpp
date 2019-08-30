@@ -2,12 +2,17 @@
 
 Game::Game(Vector2D wSize, std::string title, std::string levelFile) :
 window(sf::VideoMode(wSize.x, wSize.y), title, sf::Style::Close),
+levelFile(levelFile),
 entityMng(&resize),
 entityRen(Rect(Vector2D(20,5), Vector2D(50, 50)), wSize, &entityMng.getEntities(), &resize),
 levelLoader(&entityMng)
 {
 	levelLoader.loadLevel(levelFile);
+	addPortals();
+}
 
+void Game::addPortals()
+{
 	entityMng.addPortal(new Portal(Rect(Vector2D(), Vector2D(1, 1)), "bluePortal.png", levelLoader.getPack(), Portal::BLUE));
 	entityMng.addPortal(new Portal(Rect(Vector2D(), Vector2D(1, 1)), "redPortal.png", levelLoader.getPack(), Portal::RED));
 }
@@ -70,6 +75,14 @@ void Game::handleEvents(float dt)
 		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) entityRen.movCamera(entityRen.LEFT, dt);
 		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) entityRen.movCamera(entityRen.UP, dt);
 		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) entityRen.movCamera(entityRen.DOWN, dt);
+
+		if(!sf::Keyboard::isKeyPressed(sf::Keyboard::R)) resetRel = true;
+		if(sf::Keyboard::isKeyPressed(sf::Keyboard::R) && resetRel)
+		{
+			resetRel = false;
+			levelLoader.loadLevel(levelFile);
+			addPortals();
+		}
 
 		if(!sf::Mouse::isButtonPressed(sf::Mouse::Left)) lMouseRel = true;
 		if(!sf::Mouse::isButtonPressed(sf::Mouse::Right)) rMouseRel = true;

@@ -51,9 +51,9 @@ private:
 	std::vector<Entity*> colEntities; //Colliadable entity
 	std::vector<DisplaceableEntity*> displaceableEntities;
 	Player* player;
+	FinishBlock* finishBlock;
 	Array<Portal*, 2> portals;
 	Array<PortalProjectile*, 2> portalProj;
-	FinishBlock* finishBlock;
 
 	bool* resize;
 };

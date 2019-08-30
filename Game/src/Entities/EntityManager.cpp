@@ -16,6 +16,12 @@ void EntityManager::reset()
 	entities.clear();
 	colEntities.clear();
 	displaceableEntities.clear();
+	entities_uptr.clear();
+
+	player = nullptr;
+	finishBlock = nullptr;
+	portals.reset();
+	portalProj.reset();
 }
 
 void EntityManager::update(float dt)
