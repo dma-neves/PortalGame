@@ -1,4 +1,8 @@
+#include <fstream>
+
 #include <Game.h>
+
+bool validLevel(std::string levelName);
 
 int main()
 {
@@ -7,10 +11,33 @@ int main()
 	std::cin >> height;
 
 	std::cout << "Level name: ";
-	std::string levelFile;
-	std::cin >> levelFile;
-	levelFile += ".txt";
+	std::string levelName;
+	std::cin >> levelName;
+	std::string levelFile = levelName +  ".txt";
 
-	Game game(Vector2D(height, height), "Portal Game", levelFile);
-	game.run();
+	if(!validLevel(levelName)) std::cout << "Error: Invalid level name" << std::endl;
+
+	else
+	{
+		Game game(Vector2D(height, height), "Portal Game", levelFile);
+		game.run();
+	}
+}
+
+bool validLevel(std::string levelName)
+{
+	std::ifstream namesFile(LEVEL_NAMES_PATH);
+
+    std::string name;
+    while (namesFile >> name)
+	{
+		if(name == levelName) 
+		{
+			namesFile.close();
+			return true;
+		}
+	}
+
+    namesFile.close();
+	return false;
 }
