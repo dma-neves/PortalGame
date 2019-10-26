@@ -19,8 +19,9 @@
       - Execute the command `sudo apt-get install python-pygame` using the terminal
       - A more comprehensive installation guide can be found at (https://www.pygame.org/wiki/GettingStarted)
       
-  3. *Running the launcher*
-      - In the directory where you cloned or downloaded the repository you can run the launcher using the executable launcher
+  3. *Building and running the launcher*
+      - In the directory where you cloned or downloaded the repository you can compile the launcher using the Makefile (`make` command)
+      - To run it use the created executable launcher.out
       - From the launcher you can build the game, run the game, run the level editor and view the existing levels
       
  **Game controls:**
