@@ -20,8 +20,7 @@
       - A more comprehensive installation guide can be found at (https://www.pygame.org/wiki/GettingStarted)
       
   3. *Running the launcher*
-      - Go to the directory where you cloned or downloaded the repository
-      - To run the launcher exectue the command `./launcher` using the terminal
+      - In the directory where you cloned or downloaded the repository you can run the launcher using the executable launcher
       - From the launcher you can build the game, run the game, run the level editor and view the existing levels
       
  **Game controls:**
